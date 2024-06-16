@@ -4,6 +4,7 @@ import Wrap from "@/components/Common/Wrap";
 import Banner from "@/components/page/main/Banner";
 import Image from "next/image";
 import { IoChevronDown } from "react-icons/io5";
+import Footers from "@/components/Layout/Footers/Footers";
 
 export default function Home() {
   return (
@@ -305,6 +306,7 @@ export default function Home() {
         </Wrap>
 
       </main>
+      <Footers/>
     </>
   )
 }
