@@ -12,7 +12,8 @@ const config: Config = {
         "primary" : "#4FAAFF",
         "OnBackgroundGray" : "#A5A5A5",
         "background" : "#FFFFFF",
-        "SubColor4" : "#99CEFF"
+        "SubColor4" : "#99CEFF",
+        "OnSurface" : "#878787"
       }
     },
   },
