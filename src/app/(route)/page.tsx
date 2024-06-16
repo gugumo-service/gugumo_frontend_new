@@ -132,6 +132,13 @@ export default async function Home() {
               }
             </div>
 
+            <div className="mt-[13px] md:mt-7 text-right">
+              <button className="inline-flex items-center py-[0.4em] text-sm md:text-base px-4 font-semibold text-primary bg-OnPrimary border border-primary rounded gap-1 cursor-pointer">
+                <Image src={"/asset/image/icon/write.svg"} alt="작성 아이콘" width={24} height={24}/>
+                새글 작성
+              </button>
+            </div>
+
           </div>
 
         </Wrap>
