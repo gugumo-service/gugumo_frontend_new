@@ -6,15 +6,17 @@ import Image from "next/image";
 import { IoChevronDown } from "react-icons/io5";
 import Footers from "@/components/Layout/Footers/Footers";
 
-export default function Home() {
+export default async function Home() {
+
+  const res = await fetch(`${process.env.API_URL}/api/v1/meeting`);
+  const data = await res.json();
+
   return (
     <>
       <Headers/>
       <main className="md:pt-[50px] md:pb-[170px] pt-6 pb-[121px]">
         <Banner/>
-        <Wrap>
-          <Recommends/>
-        </Wrap>
+        <Wrap><Recommends/></Wrap>
 
         <Wrap className="mt-[100px]">
 
@@ -90,216 +92,45 @@ export default function Home() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-[13px] md:gap-[30px] mt-[10px] md:mt-7">
 
-                <div className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
+              {
+                data.data.content.map((e : any,index : number)=>(
+
+                <div key={e.postId} className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
                   <div className="flex gap-[5px]">
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">1</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">2</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">3</div>
+                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">{e.meetingStatus}</div>
+                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">{e.gameType}</div>
+                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">{e.location}</div>
                   </div>
-                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">제목</h4>
+                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">{e.title}</h4>
                   <ul className="mt-8 text-[13px]">
+                    {
+                      e.meetingDateTime &&
+                      <li className="flex text-OnBackgroundGray">
+                        <p className="pr-[9px]">시간</p>
+                        <p className="border-l border-OnBackgroundGray pl-[9px]">{e.meetingDateTime}</p>
+                      </li>
+                    }
+                    {
+                      e.meetingDays &&
+                      <li className="flex text-OnBackgroundGray">
+                        <p className="pr-[9px]">요일</p>
+                        <p className="border-l border-OnBackgroundGray pl-[9px]">{e.meetingDays}</p>
+                      </li>
+                    }
                     <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
+                      <p className="pr-[9px]">인원</p>
+                      <p className="border-l border-OnBackgroundGray pl-[9px]">{e.meetingMemberNum}명</p>
                     </li>
                   </ul>
                   <div className="flex items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
-                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일</span>
-                    북마크
-                  </div>
-                </div>
-                <div className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
-                  <div className="flex gap-[5px]">
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">1</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">2</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">3</div>
-                  </div>
-                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">제목</h4>
-                  <ul className="mt-8 text-[13px]">
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                  </ul>
-                  <div className="flex items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
-                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일</span>
-                    북마크
-                  </div>
-                </div>
-                <div className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
-                  <div className="flex gap-[5px]">
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">1</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">2</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">3</div>
-                  </div>
-                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">제목</h4>
-                  <ul className="mt-8 text-[13px]">
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                  </ul>
-                  <div className="flex items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
-                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일</span>
-                    북마크
-                  </div>
-                </div>
-                <div className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
-                  <div className="flex gap-[5px]">
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">1</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">2</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">3</div>
-                  </div>
-                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">제목</h4>
-                  <ul className="mt-8 text-[13px]">
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                  </ul>
-                  <div className="flex items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
-                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일</span>
-                    북마크
-                  </div>
-                </div>
-                <div className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
-                  <div className="flex gap-[5px]">
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">1</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">2</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">3</div>
-                  </div>
-                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">제목</h4>
-                  <ul className="mt-8 text-[13px]">
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                  </ul>
-                  <div className="flex items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
-                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일</span>
-                    북마크
-                  </div>
-                </div>
-                <div className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
-                  <div className="flex gap-[5px]">
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">1</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">2</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">3</div>
-                  </div>
-                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">제목</h4>
-                  <ul className="mt-8 text-[13px]">
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                  </ul>
-                  <div className="flex items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
-                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일</span>
-                    북마크
-                  </div>
-                </div>
-                <div className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
-                  <div className="flex gap-[5px]">
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">1</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">2</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">3</div>
-                  </div>
-                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">제목</h4>
-                  <ul className="mt-8 text-[13px]">
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                  </ul>
-                  <div className="flex items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
-                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일</span>
-                    북마크
-                  </div>
-                </div>
-                <div className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
-                  <div className="flex gap-[5px]">
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">1</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">2</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">3</div>
-                  </div>
-                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">제목</h4>
-                  <ul className="mt-8 text-[13px]">
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">시간</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]"></p>
-                    </li>
-                  </ul>
-                  <div className="flex items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
-                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일</span>
+                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일 {e.meetingDeadline}</span>
                     북마크
                   </div>
                 </div>
 
-              </div>
+                ))
+              }
+            </div>
 
           </div>
 
