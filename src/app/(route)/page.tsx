@@ -93,7 +93,7 @@ export default async function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-[13px] md:gap-[30px] mt-[10px] md:mt-7">
 
               {
-                data.data.content.map((e : any,index : number)=>(
+                data.data.content.map((e : any)=>(
 
                 <div key={e.postId} className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
                   <div className="flex gap-[5px]">

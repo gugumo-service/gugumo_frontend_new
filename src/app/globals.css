@@ -8,12 +8,16 @@
   :root {}
 } */
 
-body {
-  font-family: "Pretendard";
-}
-
 /* @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 } */
+
+
+body {
+  font-family: "Pretendard";
+}
+
+*::-webkit-scrollbar {width: 8px;}
+*::-webkit-scrollbar-thumb {background-color: #4FAAFF; border-radius: 10px;}
