@@ -1,3 +1,4 @@
+"use client"
 import Recommend from "@/components/Common/Recommends/Recommend/Recommend";
 import Image from "next/image";
 import { useRef } from "react";

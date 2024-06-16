@@ -13,7 +13,8 @@ const config: Config = {
         "OnBackgroundGray" : "#A5A5A5",
         "background" : "#FFFFFF",
         "SubColor4" : "#99CEFF",
-        "OnSurface" : "#878787"
+        "OnSurface" : "#878787",
+        "Surface" : "#EEF4FC",
       }
     },
   },
