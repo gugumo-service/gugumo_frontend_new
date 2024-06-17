@@ -1,11 +1,45 @@
 "use client"
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any}) {
 
+    const {register,handleSubmit} = useForm();
+    const router = useRouter();
     const [active,setActive] = useState(false);
+
+    const onSubmit = async (event : any)=>{
+
+      const {username,password} = event;
+  
+      if(username === ""){
+          return;
+      //   return setIsEmailError('이메일을 입력해주세요.');
+      }
+  
+      if(password === ""){
+          return;
+      //   return setIsPasswordError('비밀번호을 입력해주세요.');
+      }
+  
+      const res = await signIn('credentials',{
+        username : username,
+        password : password,
+        redirect: false,
+      });
+  
+      if(res?.ok){
+        router.push('/');
+        return onClose();
+      }else{
+        alert('로그인에 실패 하였습니다.');
+      }
+    
+    }
 
     useEffect(()=>{
         const html = document.querySelector('html');
@@ -28,9 +62,9 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
                 <Image src="/asset/image/icon.png" alt="로고 아이콘" width={64} height={63}/>
             </div>
             <h5 className="font-semibold text-lg text-center">로그인</h5>
-            <form className="mt-6">
-                <input type="text" placeholder='이메일을 입력해주세요.' className="h-9 md:h-11 rounded-lg border border-Outline font-medium text-sm md:text-base w-full px-3" />
-                <input type="password" placeholder='비밀번호를 입력하세요.'  className="h-9 md:h-11 rounded-lg border border-Outline font-medium text-sm md:text-base w-full px-3 mt-2" />
+            <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
+                <input type="text" placeholder='이메일을 입력해주세요.' className="h-9 md:h-11 rounded-lg border border-Outline font-medium text-sm md:text-base w-full px-3" {...register('username')} />
+                <input type="password" placeholder='비밀번호를 입력하세요.'  className="h-9 md:h-11 rounded-lg border border-Outline font-medium text-sm md:text-base w-full px-3 mt-2" {...register('password')} />
                 <div className="text-center mt-9">
                     <button className="font-semibold text-sm md:text-base text-OnPrimary bg-primary py-2 px-4 rounded">로그인 하기</button>
                 </div>

@@ -6,8 +6,8 @@ export const authOptions : NextAuthOptions = {
         CredentialsProvider({
             name : "Credentials",
             credentials : {
-                username : {},
-                password : {}
+                username: { type: "text", placeholder: "이메일을 입력해주세요." },
+                password: { type: "password",placeholder: "비밀번호를 입력해주세요." }
             },
             async authorize(credentials) : Promise<any> {
                 if(!credentials) return null;
@@ -16,18 +16,22 @@ export const authOptions : NextAuthOptions = {
 
                     const res = await fetch(`${process.env.API_URL}/api/v1/login`,{
                         method : "POST",
+                        headers : {
+                            "content-type" : "application/json"
+                        },
                         body : JSON.stringify({
                             username: credentials.username,
-                            password: credentials.password,
+                            password: credentials.password
                         })
                     });
 
-                    const data = res.json();
-                    console.log(data);
-
+                    if(res.headers.get("authorization")){
+                        return {token : res.headers.get('authorization')};
+                    }
                     return null;
 
                 } catch (err){
+                    console.log(err);
                     return null;
                 }
 
