@@ -1,11 +1,27 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default function Login() {
+export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any}) {
+
+    const [active,setActive] = useState(false);
+
+    useEffect(()=>{
+        const html = document.querySelector('html');
+        if(!html) return;
+        if(isOpen){
+          html.style.overflowY = "hidden";
+        }
+        setTimeout(() => {
+          setActive(true);
+        }, 200);
+    },[isOpen]);
+
   return (
     <div className="fixed top-0 left-0 w-full h-full z-50 bg-[rgba(000,000,000,0.6)]">
         <div className="z-50 w-[90%] max-w-[422px] fixed overflow-visible top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white py-9 px-16 box-border rounded-xl">
-            <button type="button" className="absolute right-4 top-5 cursor-pointer">
+            <button type="button" className="absolute right-4 top-5 cursor-pointer" onClick={onClose}>
                 <Image src="/asset/image/icon/close.svg" alt="취소버튼" width={24} height={24} />
             </button>
             <div className="w-[61px] mx-auto mb-5">

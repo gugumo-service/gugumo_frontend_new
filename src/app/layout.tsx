@@ -4,6 +4,7 @@ import "@/app/font.css"
 import "@/app/globals.css";
 import CustomModal from "@/components/Modal/custom-modal";
 import Login from "@/components/Modal/Login/Login";
+import StoreProvider from "@/lib/store/StoreProvider";
 
 export const metadata: Metadata = {
   title: "구구모",
@@ -38,9 +39,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        {children}
-        <Login/>
-        <CustomModal/>
+        <StoreProvider>
+          {children}
+          <CustomModal/>
+        </StoreProvider>
       </body>
     </html>
   );

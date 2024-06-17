@@ -1,13 +1,15 @@
 import Wrap from "@/components/Common/Wrap";
+import LoginBtn from "@/components/Layout/Headers/LoginBtn";
 import Link from "next/link";
 
 export default function Headers() {
+
   return (
     <header className="mt-8 md:mt-10 w-full relative z-20">
       <Wrap className="flex items-center justify-between">
         <Link href={'/'} className="md:w-[172px] w-[91px]"><img src="/asset/image/logo.svg" alt="로고"/></Link>
 
-        <button className="flex items-center justify-center w-[74px] h-[35px] bg-primary text-white text-base font-semibold rounded cursor-pointer">로그인</button>
+        <LoginBtn/>
 
         {/* <div className="flex items-center gap-[26px]">
           <Alarm/>
