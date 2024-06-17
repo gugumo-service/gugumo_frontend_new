@@ -1,6 +1,4 @@
 import Wrap from "@/components/Common/Wrap";
-import Alarm from "@/components/Layout/Headers/Alarm/Alarm";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Headers() {
@@ -9,9 +7,9 @@ export default function Headers() {
       <Wrap className="flex items-center justify-between">
         <Link href={'/'} className="md:w-[172px] w-[91px]"><img src="/asset/image/logo.svg" alt="로고"/></Link>
 
-        {/* <button className="flex items-center justify-center w-[74px] h-[35px] bg-primary text-white text-base font-semibold rounded cursor-pointer">로그인</button> */}
+        <button className="flex items-center justify-center w-[74px] h-[35px] bg-primary text-white text-base font-semibold rounded cursor-pointer">로그인</button>
 
-        <div className="flex items-center gap-[26px]">
+        {/* <div className="flex items-center gap-[26px]">
           <Alarm/>
           <Link href={"/bookmark"}>
             <Image className="cursor-pointer" src="/asset/image/icon/bookmark.svg" alt="북마크 아이콘" width={36} height={37}/>
@@ -30,7 +28,8 @@ export default function Headers() {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
+
       </Wrap>
     </header>
   )
