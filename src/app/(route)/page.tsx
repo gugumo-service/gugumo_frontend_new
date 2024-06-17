@@ -1,10 +1,24 @@
-import Recommends from "@/components/Common/Recommends/Recommends";
 import Headers from "@/components/Layout/Headers/Headers";
 import Wrap from "@/components/Common/Wrap";
 import Banner from "@/components/page/main/Banner";
 import Image from "next/image";
 import { IoChevronDown } from "react-icons/io5";
 import Footers from "@/components/Layout/Footers/Footers";
+import Recommends from "@/components/Layout/Recommends/Recommends";
+
+const LOCATION = [
+  {get : "SEOUL",name : "서울"},
+  {get : "GYEONGGI",name : "경기"},
+  {get : "INCHEON",name : "인천"},
+  {get : "DAEGU",name : "대구"},
+  {get : "BUSAN",name : "부산"},
+  {get : "GYEONGNAM",name : "경남"},
+  {get : "GYEONGBUK",name : "경북"},
+  {get : "GANGWON",name : "강원"},
+  {get : "JEONNAM",name : "전남"},
+  {get : "JEONBUK",name : "전북"},
+  {get : "OTHER",name : "그외"}
+];
 
 export default async function Home() {
 
@@ -40,14 +54,12 @@ export default async function Home() {
           <div className="mt-[25px] md:mt-9">
             <p className="text-lg font-semibold text-OnSurface">지역</p>
             <div className="flex overflow-x-auto gap-[4px] md:gap-[14px] mt-[11px]">
-              <button className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface" >1</button>
-              <button className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface" >1</button>
-              <button className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface" >1</button>
-              <button className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface" >1</button>
-              <button className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface" >1</button>
-              <button className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface" >1</button>
-              <button className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface" >1</button>
-              <button className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface" >1</button>
+              <button className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface leading-none">전체</button>
+              {
+                LOCATION.map((el,index)=>(
+                  <button key={index} className="cursor-pointer text-base font-medium py-2 px-7 rounded-full border border-primary whitespace-nowrap text-OnSurface leading-none">{el.name}</button>
+                ))
+              }
             </div>
           </div>
 
