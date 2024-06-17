@@ -2,9 +2,26 @@ import Card from "@/components/Common/Card/Card";
 import Wrap from "@/components/Common/Wrap";
 import Footers from "@/components/Layout/Footers/Footers";
 import Headers from "@/components/Layout/Headers/Headers";
+import { authOptions } from "@/lib/authOptions";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
-export default function List() {
+export default async function List() {
+
+    const session = await getServerSession(authOptions) as any;
+
+    if(!session){
+        return redirect('/');
+    }
+
+    const res = await fetch(`${process.env.API_URL}/api/v1/meeting/my`,{
+        headers : {
+            "Authorization" : session?.accessToken
+        }
+    });
+    const data = await res.json();
+
   return (
     <>
         <Headers/>
@@ -23,7 +40,7 @@ export default function List() {
 
                 <div className="mt-5 md:mt-[46px] bg-Surface rounded-xl p-[70px]">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-[30px] mt-[10px] md:mt-7">
-                        { new Array(4).fill(0).map((el,_)=><Card key={el.postId} el={el}/>) }
+                        { data.data.content.map((el : any)=><Card key={el.postId} el={el}/>) }
                     </div>
                 </div>
 
