@@ -4,11 +4,7 @@ import Footers from "@/components/Layout/Footers/Footers";
 import Headers from "@/components/Layout/Headers/Headers";
 import Image from "next/image";
 
-export default async function Bookmark() {
-
-    // const res = await fetch(`${process.env.API_URL}/api/v1/bookmark`);
-    // const data = await res.json();
-
+export default function List() {
   return (
     <>
         <Headers/>
@@ -16,7 +12,7 @@ export default async function Bookmark() {
             <Wrap>
                 
                 <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-6 md:gap-5">
-                    <h4>북마크</h4>
+                    <h4>작성글</h4>
                     <form className="-order-1 md:order-1 w-full md:w-[492px] h-[34px] md:h-[53px] relative rounded-lg block bg-Surface">
                         <input type="text" className="w-full h-full box-border px-3 bg-transparent text-[13px] md:text-base font-medium outline-none" placeholder="제목, 글 내용을 검색해보세요!"/>
                         <button className="absolute w-5 md:w-auto right-[10px] top-1/2 -translate-y-1/2">
@@ -36,5 +32,4 @@ export default async function Bookmark() {
         <Footers/>
     </>
   )
-
 }
