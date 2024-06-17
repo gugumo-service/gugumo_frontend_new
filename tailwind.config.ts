@@ -16,6 +16,7 @@ const config: Config = {
         "SubColor4" : "#99CEFF",
         "OnSurface" : "#878787",
         "Surface" : "#EEF4FC",
+        "Outline" : "#D9D9D9",
       }
     },
   },
