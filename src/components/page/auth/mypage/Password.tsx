@@ -35,7 +35,7 @@ export default function Password() {
             if(res.ok){
                 const data = await res.json();
 
-                if(data.status){
+                if(data.status === "success"){
                     alert('비밀번호가 수정 되었습니다.');
                 }else{
                     alert('비밀번호 수정에 실패 하였습니다.');
