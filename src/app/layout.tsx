@@ -3,8 +3,8 @@ import "swiper/css";
 import "@/app/font.css"
 import "@/app/globals.css";
 import CustomModal from "@/components/Modal/custom-modal";
-import Login from "@/components/Modal/Login/Login";
 import StoreProvider from "@/lib/store/StoreProvider";
+import AuthProvider from "@/provider/AuthProvider";
 
 export const metadata: Metadata = {
   title: "구구모",
@@ -39,10 +39,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <StoreProvider>
-          {children}
-          <CustomModal/>
-        </StoreProvider>
+        <AuthProvider>
+          <StoreProvider>
+            {children}
+            <CustomModal/>
+          </StoreProvider>
+        </AuthProvider>
       </body>
     </html>
   );
