@@ -5,6 +5,7 @@ import Image from "next/image";
 import { IoChevronDown } from "react-icons/io5";
 import Footers from "@/components/Layout/Footers/Footers";
 import Recommends from "@/components/Layout/Recommends/Recommends";
+import Card from "@/components/Common/Card/Card";
 
 const LOCATION = [{get : "SEOUL",name : "서울"},{get : "GYEONGGI",name : "경기"},{get : "INCHEON",name : "인천"},{get : "DAEGU",name : "대구"},{get : "BUSAN",name : "부산"},{get : "GYEONGNAM",name : "경남"},{get : "GYEONGBUK",name : "경북"},{get : "GANGWON",name : "강원"},{get : "JEONNAM",name : "전남"},{get : "JEONBUK",name : "전북"},{get : "OTHER",name : "그외"}];
 
@@ -89,46 +90,8 @@ export default async function Home() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-[13px] md:gap-[30px] mt-[10px] md:mt-7">
-
-              {
-                data.data.content.map((e : any)=>(
-
-                <div key={e.postId} className="py-5 px-4 bg-Surface md:bg-white border border-[#D9D9D9] rounded-lg cursor-pointer">
-                  <div className="flex gap-[5px]">
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">{e.meetingStatus}</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">{e.gameType}</div>
-                    <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px]">{e.location}</div>
-                  </div>
-                  <h4 className="font-medium text-base leading-[1.3] mt-3 break-keep text-ellipsis line-clamp-2 h-10">{e.title}</h4>
-                  <ul className="mt-8 text-[13px]">
-                    {
-                      e.meetingDateTime &&
-                      <li className="flex text-OnBackgroundGray">
-                        <p className="pr-[9px]">시간</p>
-                        <p className="border-l border-OnBackgroundGray pl-[9px]">{e.meetingDateTime}</p>
-                      </li>
-                    }
-                    {
-                      e.meetingDays &&
-                      <li className="flex text-OnBackgroundGray">
-                        <p className="pr-[9px]">요일</p>
-                        <p className="border-l border-OnBackgroundGray pl-[9px]">{e.meetingDays}</p>
-                      </li>
-                    }
-                    <li className="flex text-OnBackgroundGray">
-                      <p className="pr-[9px]">인원</p>
-                      <p className="border-l border-OnBackgroundGray pl-[9px]">{e.meetingMemberNum}명</p>
-                    </li>
-                  </ul>
-                  <div className="flex items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
-                    <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일 {e.meetingDeadline}</span>
-                    북마크
-                  </div>
-                </div>
-
-                ))
-              }
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[13px] md:gap-[30px] mt-[10px] md:mt-7">
+              { data.data.content.map((el : any)=><Card key={el.postId} el={el}/>) }
             </div>
 
             <div className="mt-[13px] md:mt-7 text-right">

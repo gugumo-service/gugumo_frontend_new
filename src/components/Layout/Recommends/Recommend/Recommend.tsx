@@ -1,5 +1,6 @@
 "use client"
 import Bookmark from "@/components/Common/Button/Bookmark/Bookmark";
+import { GAMETYPE, LOCATION, STATUS } from "@/constant/card/constant";
 import moment from "moment";
 import Image from "next/image";
 import { useRef } from "react";
@@ -7,9 +8,7 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 
 const BUTTONSTYLE = "w-8 h-8 xl:w-10 xl:h-10 rounded-full flex-none border border-primary cursor-pointer text-primary relative hidden md:block";
-const STATUS : {[key : string] : string } = {"RECRUIT" : "모집중","END" : "모집완료","ALL" : "전체",};
-const GAMETYPE : {[key : string] : string } = {"BADMINTON" : "배드민턴","FUTSAL" : "풋살","BASKETBALL" : "농구","TENNIS" : "테니스","TABLETENNIS" : "탁구","BASEBALL" : "야구"};
-const LOCATION : {[key : string] : string } = {"SEOUL" : "서울","GYEONGGI" : "경기","INCHEON" : "인천","DAEGU" : "대구","BUSAN" : "부산","GYEONGNAM" : "경남","GYEONGBUK" : "경북","GANGWON" : "강원","JEONNAM" : "전남","JEONBUK" : "전북","OTHER" : "그외"};
+
 
 export default function Recommend({data} : {data : any}) {
 
@@ -55,7 +54,7 @@ export default function Recommend({data} : {data : any}) {
                 data.map((e: any)=>(
                     <SwiperSlide key={e.postId}>
                         <div className="bg-[#DBEBFF] border border-SubColor4 py-5 px-4 rounded-lg cursor-pointer">
-                            <div className="flex flex-wrap gap-[5px]">
+                            <div className="flex flex-wrap gap-[5px] leading-none">
                                 <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#4378FF] bg-[#BFE0FF]">{STATUS[e.meetingStatus]}</div>
                                 <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#54A900] bg-[#D2FFAE]">{GAMETYPE[e.gameType]}</div>
                                 <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#FF6414] bg-[#FDC9AF]">{LOCATION[e.location]}</div>
