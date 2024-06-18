@@ -1,13 +1,15 @@
+import Search from "@/components/page/auth/Search";
 import Card from "@/components/Common/Card/Card";
 import Wrap from "@/components/Common/Wrap";
 import Footers from "@/components/Layout/Footers/Footers";
 import Headers from "@/components/Layout/Headers/Headers";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 import { redirect } from "next/navigation";
 
-export default async function Bookmark() {
+export default async function Bookmark({searchParams} : {searchParams? : {q? : string}}) {
+
+    const q = searchParams?.q || "";
 
     const session = await getServerSession(authOptions) as any;
 
@@ -15,7 +17,7 @@ export default async function Bookmark() {
         return redirect('/');
     }
 
-    const res = await fetch(`${process.env.API_URL}/api/v1/bookmark`,{
+    const res = await fetch(`${process.env.API_URL}/api/v1/bookmark?q=${q}`,{
         headers : {
             "Authorization" : session?.accessToken
         }
@@ -30,12 +32,7 @@ export default async function Bookmark() {
                     
                     <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-6 md:gap-5">
                         <h4>북마크</h4>
-                        <form className="-order-1 md:order-1 w-full md:w-[492px] h-[34px] md:h-[53px] relative rounded-lg block bg-Surface">
-                            <input type="text" className="w-full h-full box-border px-3 bg-transparent text-[13px] md:text-base font-medium outline-none" placeholder="제목, 글 내용을 검색해보세요!"/>
-                            <button className="absolute w-5 md:w-auto right-[10px] top-1/2 -translate-y-1/2">
-                                <Image src="/asset/image/icon/search.svg" alt="검색버튼" width={24} height={24} />
-                            </button>
-                        </form>
+                        <Search/>
                     </div>
 
                     <div className="mt-5 md:mt-[46px] bg-Surface rounded-xl p-[70px]">
