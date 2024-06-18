@@ -20,11 +20,10 @@ export default function Password() {
             return alert('비밀번호가 동일하지 않습니다.');
         }
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/member/updatePassword`,{
+        const res = await fetch(`/back/api/v1/member/updatePassword`,{
             method : "PATCH",
             headers : {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json',
                 "Authorization" : session?.accessToken
             },
             body : JSON.stringify({
