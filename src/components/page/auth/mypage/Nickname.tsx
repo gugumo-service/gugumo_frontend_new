@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form"
 
-export default function Nickname() {
+export default function Nickname({setNickname} : {setNickname : any}) {
 
     const {data : session} = useSession() as any;
 
@@ -60,38 +60,34 @@ export default function Nickname() {
         if(!isCheck){
             return alert('닉네임 중복 체크를 해주세요.');
         }
-
+        
         try {
             const res = await fetch('/back/api/v1/member/updateNickname',{
                 method : "PATCH",
                 headers : {
-                    'Content-Type': 'application/json',
-                    "Authrozation" : session?.accessToken
+                    "Authorization" : session?.accessToken,
+                    "Content-Type": "application/json"
                 },
-                body : JSON.stringify({
-                    nickname
-                })
+                body : JSON.stringify({nickname : nickname})
             });
 
             if(res.ok){
                 const data = await res.json();
 
                 if(data.status === "success"){
-                    alert('비밀번호가 수정 되었습니다.');
+                    alert('닉네임 수정이 완료 되었습니다.');
+                    return setNickname(nickname);
                 }else{
-                    alert('비밀번호 수정에 실패 하였습니다.');
+                    alert('닉네임 수정에 실패 하였습니다.');
                 }
 
             }else{
-
-                console.log(res);
-
                 return alert('에러가 발생 했습니다.');
             }
 
         }
         catch(err){
-            console.log(err);
+            console.error(err);
             return alert('에러가 발생 했습니다.');
         }
         finally {
@@ -106,9 +102,9 @@ export default function Nickname() {
         <div className="block md:flex items-center gap-10 rounded bg-white md:bg-Surface md:py-[59px] md:px-[5%] lg:px-[4.4%]">
             <h4 className="text-base font-semibold text-nowrap">개인정보 변경</h4>
             <div className="min-w-0 flex-1">
-                <label htmlFor="" className="text-sm md:text-base text-black">닉네임</label>
+                <label htmlFor="nickname" className="text-sm md:text-base text-black">닉네임</label>
                 <div className="flex gap-2 md:gap-4 mt-3 md:max-w-[630px]">
-                    <input className="h-12 md:h-14 text-sm md:text-base bg-background rounded-lg w-full px-4 placeholder:text-OnSurface" type="text" placeholder="닉네임을 입력하세요." {...register("nickname")}/>
+                    <input className="h-12 md:h-14 text-sm md:text-base bg-background rounded-lg w-full px-4 placeholder:text-OnSurface" id="nickname" type="text" placeholder="닉네임을 입력하세요." {...register("nickname")}/>
                     <button type="button" onClick={confirmHanlder} className="cursor-pointer text-base font-medium text-OnPrimary bg-primary w-[109px] flex items-center justify-center rounded-lg flex-none">중복확인</button>
                 </div>
             </div>
