@@ -6,7 +6,7 @@ export default function Password() {
 
     const {data : session} = useSession() as any;
 
-    const {register,handleSubmit} = useForm();
+    const {register,handleSubmit,setValue} = useForm();
 
     const onSubmitHanlder = async (event:any)=>{
 
@@ -20,18 +20,39 @@ export default function Password() {
             return alert('비밀번호가 동일하지 않습니다.');
         }
 
-        const res = await fetch(`/back/api/v1/member/updatePassword`,{
-            method : "PATCH",
-            headers : {
-                'Content-Type': 'application/json',
-                "Authorization" : session?.accessToken
-            },
-            body : JSON.stringify({
-                password
-            })
-        });
+        try {
+            const res = await fetch(`/back/api/v1/member/updatePassword`,{
+                method : "PATCH",
+                headers : {
+                    'Content-Type': 'application/json',
+                    "Authorization" : session?.accessToken
+                },
+                body : JSON.stringify({
+                    password
+                })
+            });
 
-        console.log(res);
+            if(res.ok){
+                const data = await res.json();
+
+                if(data.status === "success"){
+                    alert('비밀번호가 수정 되었습니다.');
+                }else{
+                    alert('비밀번호 수정에 실패 하였습니다.');
+                }
+
+            }else{
+                return alert('에러가 발생 했습니다.');
+            }
+
+        }
+        catch(err){
+            return alert('에러가 발생 했습니다.');
+        }
+        finally {
+            setValue('password',"");
+            setValue('pwConfirm',"");
+        }
         
     }
 
