@@ -5,21 +5,29 @@ import Location from "@/components/page/main/Location";
 import Search from "@/components/page/main/Search";
 import Sort from "@/components/page/main/Sort";
 import Status from "@/components/page/main/Status";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function List({data} : {data : any}) {
 
+    const router = useRouter();
     const [content,setContent] = useState(data);
     const [q,setQ] = useState("");
     const [meetingstatus,setMeetingstatus] = useState('RECRUIT');
     const [location,setLocation] = useState('');
     const [gametype,setGametype] = useState('');
     const [sort,setSort] = useState('NEW');
+    const {data : session} = useSession() as any;
 
     const fetchs = async ()=>{
         try {
-            const res = await fetch(`/back/api/v1/meeting?q=${q}&meetingstatus=${meetingstatus}&location=${location}&gametype=${gametype}&sort=${sort}`);
+            const res = await fetch(`/back/api/v1/meeting?q=${q}&meetingstatus=${meetingstatus}&location=${location}&gametype=${gametype}&sort=${sort}`,{
+                headers : {
+                    "Authorization" : session?.accessToken
+                }
+            });
             const data = await res.json();
             setContent(data.data.content);
         }
@@ -27,10 +35,15 @@ export default function List({data} : {data : any}) {
             alert('에러가 발생했습니다.');
         }
     }
+
+    const writeHandler = ()=>{
+        if(!session) return alert('로그인을 해야합니다.');
+        router.push('/post/write');
+    }
     
     useEffect(()=>{
         fetchs();
-    },[meetingstatus,q,setContent,location,gametype,sort]);
+    },[meetingstatus,q,setContent,location,gametype,sort,session]);
 
   return (
     <>
@@ -59,7 +72,7 @@ export default function List({data} : {data : any}) {
             </div>
 
             <div className="mt-[13px] md:mt-7 text-right">
-                <button className="inline-flex items-center py-[0.4em] text-sm md:text-base px-4 font-semibold text-primary bg-OnPrimary border border-primary rounded gap-1 cursor-pointer">
+                <button onClick={writeHandler} className="inline-flex items-center py-[0.4em] text-sm md:text-base px-4 font-semibold text-primary bg-OnPrimary border border-primary rounded gap-1 cursor-pointer">
                     <Image src={"/asset/image/icon/write.svg"} alt="작성 아이콘" width={24} height={24}/>
                     새글 작성
                 </button>
