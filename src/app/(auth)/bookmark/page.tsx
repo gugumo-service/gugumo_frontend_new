@@ -20,7 +20,8 @@ export default async function Bookmark({searchParams} : {searchParams? : {q? : s
     const res = await fetch(`${process.env.API_URL}/api/v1/bookmark?q=${q}`,{
         headers : {
             "Authorization" : session?.accessToken
-        }
+        },
+        cache : "no-cache"
     });
     const data = await res.json();
 

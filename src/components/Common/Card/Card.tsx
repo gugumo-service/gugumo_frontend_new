@@ -1,10 +1,12 @@
 import * as C from "@/constant/card/constant";
 import moment from "moment";
 import Bookmark from "@/components/Common/Button/Bookmark/Bookmark";
+import Link from "next/link";
 
 export default function Card({el} : {el : any}) {
+
   return (
-    <div className="bg-white border border-[#D9D9D9] py-5 px-4 rounded-lg cursor-pointer">
+    <Link href={`/detail/${el.postId}`} className="bg-white border border-[#D9D9D9] py-5 px-4 rounded-lg cursor-pointer">
         <div className="flex flex-wrap gap-[5px] leading-none">
             <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#4378FF] bg-[#BFE0FF]">{C.STATUS[el.meetingStatus]}</div>
             <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#54A900] bg-[#D2FFAE]">{C.GAMETYPE[el.gameType]}</div>
@@ -33,8 +35,9 @@ export default function Card({el} : {el : any}) {
         </ul>
         <div className="flex flex-wrap items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-[#D9D9D9] gap-[7px]">
             <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일 {el.meetingDeadline}</span>
-            <Bookmark/>
+            <Bookmark postId={el.postId} bookmarked={el.bookmarked}/>
         </div>
-    </div>
+    </Link>
   )
+  
 }
