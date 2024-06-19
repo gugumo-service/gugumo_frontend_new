@@ -3,10 +3,10 @@ import Card from "@/components/Common/Card/Card";
 import Gametype from "@/components/page/main/Gametype";
 import Location from "@/components/page/main/Location";
 import Search from "@/components/page/main/Search";
+import Sort from "@/components/page/main/Sort";
 import Status from "@/components/page/main/Status";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { IoChevronDown } from "react-icons/io5";
 
 export default function List({data} : {data : any}) {
 
@@ -15,10 +15,11 @@ export default function List({data} : {data : any}) {
     const [meetingstatus,setMeetingstatus] = useState('RECRUIT');
     const [location,setLocation] = useState('');
     const [gametype,setGametype] = useState('');
+    const [sort,setSort] = useState('NEW');
 
     const fetchs = async ()=>{
         try {
-            const res = await fetch(`/back/api/v1/meeting?q=${q}&meetingstatus=${meetingstatus}&location=${location}&gametype=${gametype}`);
+            const res = await fetch(`/back/api/v1/meeting?q=${q}&meetingstatus=${meetingstatus}&location=${location}&gametype=${gametype}&sort=${sort}`);
             const data = await res.json();
             setContent(data.data.content);
         }
@@ -29,7 +30,7 @@ export default function List({data} : {data : any}) {
     
     useEffect(()=>{
         fetchs();
-    },[meetingstatus,q,setContent,location,gametype]);
+    },[meetingstatus,q,setContent,location,gametype,sort]);
 
   return (
     <>
@@ -51,16 +52,7 @@ export default function List({data} : {data : any}) {
 
         <div className="md:bg-[#F4F5F8] mt-[38px] md:mt-[53px] md:pt-[39px] md:px-[70px] md:pb-[49px] md:rounded-xl">
 
-            <div className="flex justify-end relative text-[13px]">
-                <div className="inline-block relative">
-                    <p className="flex items-center gap-[5.5px] cursor-pointer">밑 <IoChevronDown/></p>
-                    <ul className="absolute top-full bg-white left-1/2 -translate-x-1/2 whitespace-nowrap text-center py-5 px-[15px] box-border rounded-lg border border-Surface">
-                    <li className="cursor-pointer">최신순</li>
-                    <li className="cursor-pointer mt-3">인기순</li>
-                    <li className="cursor-pointer mt-3">오래된순</li>
-                    </ul>
-                </div>
-            </div>
+            <Sort sort={sort} setSort={setSort}/>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[13px] md:gap-[30px] mt-[10px] md:mt-7">
                 { content.map((el : any)=><Card key={el.postId} el={el}/>) }

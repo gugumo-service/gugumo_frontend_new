@@ -10,6 +10,7 @@ import ViewSVG from "@/asset/image/view.svg";
 import ViewerComponent from "@/components/page/post/detail/ViewerComponent";
 import Headers from "@/components/Layout/Headers/Headers";
 import BtnList from "@/components/page/post/detail/BtnList";
+import Bookmark from "@/components/Common/Button/Bookmark/Bookmark";
 
 export default async function Detail({params} : {params : {postid : string}}) {
 
@@ -45,7 +46,7 @@ export default async function Detail({params} : {params : {postid : string}}) {
                         </div>
                     </div>
                     <div className="flex items-center gap-[6px] text-primary">
-                        버튼
+                        <Bookmark postId={data.postId} bookmarked={data.data.bookmarked}/>
                         <p className="text-sm md:text-xl font-medium">01</p>
                     </div>
                 </div>
