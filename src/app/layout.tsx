@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import "swiper/css";
 import "@/app/font.css"
 import "@/app/globals.css";
+import '@toast-ui/editor/dist/toastui-editor.css';
+import 'react-calendar/dist/Calendar.css';
 import CustomModal from "@/components/Modal/custom-modal";
 import StoreProvider from "@/lib/store/StoreProvider";
 import AuthProvider from "@/provider/AuthProvider";
