@@ -17,12 +17,12 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
       const {username,password} = event;
   
       if(username === ""){
-          return;
+          return alert('이메일을 입력해주세요.');
       //   return setIsEmailError('이메일을 입력해주세요.');
       }
   
       if(password === ""){
-          return;
+          return alert('비밀번호을 입력해주세요.');
       //   return setIsPasswordError('비밀번호을 입력해주세요.');
       }
   
@@ -71,7 +71,7 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
             </form>
             <div className="text-center text-primary font-medium text-[13px] mt-9">
                 <Link href={"/find"}>비밀번호 찾기</Link>
-                <Link href={"/sign"} className="pl-1 ml-1 relative before:block before:w-[1px] before:absolute before:left-0 before:top-0 before:h-full  before:bg-primary">회원가입 하기</Link>
+                <Link href={"/signup"} className="pl-1 ml-1 relative before:block before:w-[1px] before:absolute before:left-0 before:top-0 before:h-full  before:bg-primary">회원가입 하기</Link>
             </div>
         </div>
     </div>
