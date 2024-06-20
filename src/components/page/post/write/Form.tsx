@@ -1,7 +1,11 @@
 "use client"
 
 import { Editor } from "@toast-ui/react-editor";
-import { useRef } from "react";
+import moment from "moment";
+import { useRef, useState } from "react";
+import Calendar from "react-calendar";
+import { useForm } from "react-hook-form";
+import { IoChevronDown } from "react-icons/io5";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -9,9 +13,24 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 export default function Form() {
 
     const editorRef = useRef<Editor>(null);
+    const {register,handleSubmit} = useForm();
+    const [isMeetingDate,setIsMeetingDate] = useState(false);
+    const [isMeetingDeadline,setIsMeetingDeadline] = useState(false);
+    const [meetingDate,setMeetingDate] = useState<Value>(new Date());
+    const [meetingDeadline,setMeetingDeadline] = useState<Value>(new Date());
+    
+
+    const onSubmitHandler = (event : any)=>{
+
+        const {meetingType,location,gameType,meetingMemberNum,meetingTime,openKakao,title} = event;
+        console.log(meetingType,location,gameType,meetingMemberNum,meetingTime,openKakao,title);
+
+
+
+    }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmitHandler)}>
         <div className="flex items-center gap-3">
             <p className="flex flex-none size-[34px] rounded-full bg-primary text-2xl font-semibold text-white items-center justify-center">1</p>
             <h3 className="text-2xl font-medium">모임 정보를 입력해주세요</h3>
@@ -21,7 +40,7 @@ export default function Form() {
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">모집형식</label>
                 <div className="relative">
-                    <select className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border" name="" id="">
+                    <select id="" {...register('meetingType')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border">
                         <option value="SHORT">단기모집</option>
                         <option value="LONG">장기모집</option>
                     </select>
@@ -30,7 +49,7 @@ export default function Form() {
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">지역 선택</label>
                 <div className="relative">
-                    <select className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border" name="" id="">
+                    <select  {...register('location')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border">
                         <option value="">지역 선택을 선택해주세요.</option>
                         <option value="SEOUL">서울</option>
                         <option value="INCHEON">인천</option>
@@ -49,7 +68,7 @@ export default function Form() {
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">구기종목</label>
                 <div className="relative">
-                    <select className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border" name="" id="">
+                    <select {...register('gameType')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border">
                         <option value="">구기종목을 선택해주세요.</option>
                         <option value="BADMINTON">배드민턴</option>
                         <option value="BASKETBALL">농구</option>
@@ -62,7 +81,7 @@ export default function Form() {
             </div>
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">모집 인원</label>
-                <select className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border" name="" id="">
+                <select {...register('meetingMemberNum')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border">
                     <option value="">모집인원을 선택해주세요.</option>
                     <option value="1">1명</option>
                     <option value="2">2명</option>
@@ -73,46 +92,51 @@ export default function Form() {
             </div>
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">모임 날짜</label>
+                <div className="relative">
+                    <div className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border flex items-center cursor-pointer">
+                        {moment(meetingDate as Date).format("YYYY-MM-DD")}
+                    </div>
+                    {
+                        isMeetingDate && <Calendar className="absolute top-full z-10"/>
+                    }
+                    <IoChevronDown className="absolute right-4 top-1/2 -translate-y-1/2"/>
+                </div>
             </div>
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">시간대</label>
-                <select className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border" name="" id="">
+                <select {...register('meetingTime')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border" name="" id="">
                     <option value="">시간대을 선택해주세요.</option>
-                    <option value="1">1시</option>
-                    <option value="2">2시</option>
-                    <option value="3">3시</option>
-                    <option value="4">4시</option>
-                    <option value="5">5시</option>
-                    <option value="6">6시</option>
-                    <option value="7">7시</option>
-                    <option value="8">8시</option>
-                    <option value="9">9시</option>
-                    <option value="10">10시</option>
-                    <option value="11">11시</option>
-                    <option value="12">12시</option>
-                    <option value="13">13시</option>
-                    <option value="14">14시</option>
-                    <option value="15">15시</option>
-                    <option value="16">16시</option>
-                    <option value="17">17시</option>
-                    <option value="18">18시</option>
-                    <option value="19">19시</option>
-                    <option value="20">20시</option>
-                    <option value="21">21시</option>
-                    <option value="22">22시</option>
-                    <option value="23">23시</option>
+                    {
+                        Array.from({length : 23},(_,i)=>< option key={i} value={i+1}>{i+1}시</option>)
+                    }
                 </select>
             </div>
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">모임 요일</label>
+                <div className="flex flex-wrap min-w-0 mt-[10px] gap-[10px] justify-start">
+                    {
+                        ['월','화','수','목','금','토','일'].map((el,index)=>
+                            <div key={index} className="flex-none w-16 h-14 rounded-lg text-sm md:text-base font-medium text-OnSurface bg-Surface  relative flex items-center justify-center cursor-pointer">{el}</div>
+                        )
+                    }
+                </div>
             </div>
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">모집 마감</label>
+                <div className="relative">
+                    <div className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border flex items-center cursor-pointer">
+                        {moment(meetingDate as Date).endOf("week").format("YYYY-MM-DD")}
+                    </div>
+                    {
+                        isMeetingDeadline && <Calendar className="absolute top-full z-10"/>
+                    }
+                    <IoChevronDown className="absolute right-4 top-1/2 -translate-y-1/2"/>
+                </div>
             </div>
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">오픈카톡 주소</label>
                 <div className="relative">
-                    <input className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border" type="text" placeholder="오픈카톡 주소를 입력해주세요." />
+                    <input {...register('openKakao')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border" type="text" placeholder="오픈카톡 주소를 입력해주세요." />
                 </div>
             </div>
         </div>
@@ -126,7 +150,7 @@ export default function Form() {
 
             <div className="mt-8">
                 <label className="text-sm md:text-lg font-medium px-[6px]" htmlFor="title">제목</label>
-                <input className="bg-Surface rounded-lg w-full h-11 md:h-14 text-sm md:text-base font-medium px-4 mt-3" type="text" placeholder="제목을 입력해주세요"/>
+                <input className="bg-Surface rounded-lg w-full h-11 md:h-14 text-sm md:text-base font-medium px-4 mt-3" type="text" placeholder="제목을 입력해주세요" {...register('title')}/>
             </div>
 
             <div className="mt-7">
@@ -153,7 +177,6 @@ export default function Form() {
         <div className="text-center mt-10">
             <button className="inline-flex items-center text-primary bg-OnPrimary text-sm md:text-base font-medium border border-[#4FAAFF] rounded py-[9.5px] px-4 justify-center cursor-pointer">새글 작성</button>
         </div>
-
     </form>
   )
 }
