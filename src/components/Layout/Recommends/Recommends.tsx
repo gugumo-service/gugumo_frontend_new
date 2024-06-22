@@ -1,10 +1,18 @@
+import { getServerSession } from "next-auth";
 import Recommend from "./Recommend/Recommend";
+import { authOptions } from "@/lib/authOptions";
 
 
 export default async function Recommends() {
 
-    const res = await fetch(`${process.env.API_URL}/api/v1/meeting/recommend`);
-    const data = await res.json();
+  const session = await getServerSession(authOptions) as any;
+
+  const res = await fetch(`${process.env.API_URL}/api/v1/meeting/recommend`,{
+    headers : {
+      "Authorization" : session?.accessToken
+    },
+  });
+  const data = await res.json();
 
   return (
     <div className="mt-16">

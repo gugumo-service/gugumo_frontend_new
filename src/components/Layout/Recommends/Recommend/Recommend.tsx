@@ -9,7 +9,6 @@ import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 
 const BUTTONSTYLE = "w-8 h-8 xl:w-10 xl:h-10 rounded-full flex-none border border-primary cursor-pointer text-primary relative hidden md:block";
 
-
 export default function Recommend({data} : {data : any}) {
 
     const swiperRef = useRef<SwiperRef>(null);

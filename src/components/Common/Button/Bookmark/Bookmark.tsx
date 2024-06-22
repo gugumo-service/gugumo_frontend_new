@@ -13,7 +13,6 @@ export default function Bookmark({postId,bookmarked} : {postId : number,bookmark
     e.stopPropagation();
 
     if(!bookmarked){
-
       try {
         addBookmark({
           session,
@@ -23,19 +22,18 @@ export default function Bookmark({postId,bookmarked} : {postId : number,bookmark
       catch(err){
         console.log(err);
       }
-
     }else{
-
-      try {
-        deleteBookmark({
-          session,
-          postId
-        })
+      if(confirm('정말 삭제 하시겠습니까?')){
+        try {
+          deleteBookmark({
+            session,
+            postId
+          })
+        }
+        catch(err){
+          console.log(err);
+        }
       }
-      catch(err){
-        console.log(err);
-      }
-
     }
   }
 
