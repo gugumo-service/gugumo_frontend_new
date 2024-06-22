@@ -1,7 +1,12 @@
 import Search from "@/components/page/auth/Search";
 import Wrap from "@/components/Common/Wrap";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+import List from "@/app/(auth)/bookmark/List";
 
-export default async function Bookmark({searchParams} : {searchParams? : {q? : string}}) {
+export default async function Bookmark() {
+
+    const session = await getServerSession(authOptions) as any;
 
     return (
         <main className="pt-[23px] md:pt-[50x] pb-[121px] md:pb-[170px]">
@@ -14,6 +19,7 @@ export default async function Bookmark({searchParams} : {searchParams? : {q? : s
 
                 <div className="mt-5 md:mt-[46px] bg-Surface rounded-xl p-[70px]">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-[30px] mt-[10px] md:mt-7">
+                        <List session={session}/>
                         {/* { data.data.content.map((el : any)=><Card key={el.postId} el={el}/>) } */}
                     </div>
                 </div>

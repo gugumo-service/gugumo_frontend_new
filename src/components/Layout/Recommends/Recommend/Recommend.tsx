@@ -82,7 +82,7 @@ export default function Recommend({data} : {data : any}) {
                             </ul>
                             <div className="flex flex-wrap items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-primary gap-[7px]">
                                 <span className="whitespace-nowrap text-[13px] font-medium text-primary">모집 마감일 {e.meetingDeadline}</span>
-                                <Bookmark/>
+                                <Bookmark postId={e.postId} bookmarked={e.bookmarked}/>
                             </div>
                         </div>
                     </SwiperSlide>
