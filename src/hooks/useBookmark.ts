@@ -1,7 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-const fetchBookmarks = async (session : any)=>{
-    const response = await fetch(`/back/api/v1/bookmark`,{
+const fetchBookmarks = async ({queryKey} : {queryKey : [string,any,string]})=>{
+
+    const [,session, q] = queryKey;
+
+    const response = await fetch(`/back/api/v1/bookmark?q=${q}`,{
         headers : {
             "Authorization" : session.accessToken
         }
@@ -37,8 +40,8 @@ const deleteBookmark = async (data : any) =>{
     }
 }
 
-export const useBookmark = (session : any)=>{
-    return useQuery({queryKey : ["bookmarks"],queryFn : ()=>fetchBookmarks(session)})
+export const useBookmark = (session : any,searchTerm: string)=>{
+    return useQuery({queryKey : ["bookmarks",session,searchTerm],queryFn : fetchBookmarks })
 }
 
 
