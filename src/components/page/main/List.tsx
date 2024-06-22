@@ -49,19 +49,15 @@ export default function List({data} : {data : any}) {
     <>
         {/* 검색 */}
         <div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center gap-6 md:gap-5">
-            <Status setMeetingstatus={setMeetingstatus}/>
+            <Status meetingstatus={meetingstatus} setMeetingstatus={setMeetingstatus}/>
             <Search setQ={setQ}/>
         </div>
 
         {/* 지역 */}
-        <div className="mt-[25px] md:mt-9">
-            <Location setLocation={setLocation}/>
-        </div>
+        <div className="mt-[25px] md:mt-9"> <Location location={location} setLocation={setLocation}/> </div>
 
         {/* 종목 */}
-        <div className="mt-[18px] md:mt-[15px]">
-            <Gametype setGametype={setGametype}/>
-        </div>
+        <div className="mt-[18px] md:mt-[15px]"> <Gametype gametype={gametype} setGametype={setGametype}/> </div>
 
         <div className="md:bg-[#F4F5F8] mt-[38px] md:mt-[53px] md:pt-[39px] md:px-[70px] md:pb-[49px] md:rounded-xl">
 
