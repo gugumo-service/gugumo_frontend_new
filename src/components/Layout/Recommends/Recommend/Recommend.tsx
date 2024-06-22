@@ -9,7 +9,6 @@ import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 
 const BUTTONSTYLE = "w-8 h-8 xl:w-10 xl:h-10 rounded-full flex-none border border-primary cursor-pointer text-primary relative hidden md:block";
 
-
 export default function Recommend({data} : {data : any}) {
 
     const swiperRef = useRef<SwiperRef>(null);
@@ -82,7 +81,7 @@ export default function Recommend({data} : {data : any}) {
                             </ul>
                             <div className="flex flex-wrap items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-primary gap-[7px]">
                                 <span className="whitespace-nowrap text-[13px] font-medium text-primary">모집 마감일 {e.meetingDeadline}</span>
-                                <Bookmark/>
+                                <Bookmark postId={e.postId} bookmarked={e.bookmarked}/>
                             </div>
                         </div>
                     </SwiperSlide>
