@@ -4,14 +4,13 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 export default function Bookmark({postId,bookmarked} : {postId : number,bookmarked : boolean}) {
-
   const {data:session} = useSession() as any;
   const [isBookMark,setIsBookMark] = useState(bookmarked);
 
-  const bookmarkHandler = async (postId : number)=>{
+  const bookmarkHandler = async (e : any,postId : number)=>{
+    e.stopPropagation();
 
     if(!isBookMark){
-
       try {
         const res = await fetch("/back/api/v1/bookmark/new",{
           method : "POST",
@@ -30,7 +29,6 @@ export default function Bookmark({postId,bookmarked} : {postId : number,bookmark
       }
 
     }else{
-
       try {
         const res = await fetch(`/back/api/v1/bookmark/${postId}`,{
           method : "DELETE",
@@ -52,7 +50,7 @@ export default function Bookmark({postId,bookmarked} : {postId : number,bookmark
   }
 
   return (
-    <button onClick={()=>bookmarkHandler(postId)} type="button" className="cursor-pointer">
+    <button onClick={(e)=>bookmarkHandler(e,postId)} type="button" className="cursor-pointer">
       <BookmarkSVG className={`stroke-[#4FAAFF] ${isBookMark ? "fill-[#4FAAFF]" : "fill-none"}`} width={24} height={24} alt="북마크 아이콘"/>
     </button>
   )
