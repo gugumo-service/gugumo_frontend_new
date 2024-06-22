@@ -11,10 +11,11 @@ import ViewerComponent from "@/components/page/post/detail/ViewerComponent";
 import Headers from "@/components/Layout/Headers/Headers";
 import BtnList from "@/components/page/post/detail/BtnList";
 import Bookmark from "@/components/Common/Button/Bookmark/Bookmark";
+import Comments from "@/components/page/post/detail/Comment/Comments";
 
 export default async function Detail({params} : {params : {postid : string}}) {
 
-    const session = getServerSession(authOptions) as any;
+    const session = await getServerSession(authOptions) as any;
 
     const res = await fetch(`${process.env.API_URL}/api/v1/meeting/${params.postid}`,{
         headers : {
@@ -98,6 +99,7 @@ export default async function Detail({params} : {params : {postid : string}}) {
 
                 <BtnList/>
                 <Recommends/>
+                <Comments session={session} postid={params.postid}/>
 
             </Wrap>
         </main>

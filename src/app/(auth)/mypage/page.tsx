@@ -18,8 +18,10 @@ export default function Mypage() {
                     "Authorization" : session?.accessToken
                 }
             });
+            console.log(res);
             if(res.ok){
                 const data = await res.json();
+                console.log(data);
                 setNickname(data.data.nickname);
             }
         }

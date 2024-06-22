@@ -7,6 +7,8 @@ import 'react-calendar/dist/Calendar.css';
 import CustomModal from "@/components/Modal/custom-modal";
 import StoreProvider from "@/lib/store/StoreProvider";
 import AuthProvider from "@/provider/AuthProvider";
+import Script from "next/script";
+import QueryProvider from "@/provider/QueryProvider";
 
 export const metadata: Metadata = {
   title: "구구모",
@@ -43,8 +45,10 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <StoreProvider>
-            {children}
-            <CustomModal/>
+            <QueryProvider>
+              {children}
+              <CustomModal/>
+            </QueryProvider>
           </StoreProvider>
         </AuthProvider>
       </body>

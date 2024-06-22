@@ -1,12 +1,19 @@
+"use client"
 import * as C from "@/constant/card/constant";
 import moment from "moment";
 import Bookmark from "@/components/Common/Button/Bookmark/Bookmark";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Card({el} : {el : any}) {
 
+    const router = useRouter();
+
+    const clickHandler = (postid : number)=>{
+        router.push(`/detail/${postid}`);
+    }
+
   return (
-    <Link href={`/detail/${el.postId}`} className="bg-white border border-[#D9D9D9] py-5 px-4 rounded-lg cursor-pointer">
+    <div onClick={()=>clickHandler(el.postId)} className="bg-white border border-[#D9D9D9] py-5 px-4 rounded-lg cursor-pointer">
         <div className="flex flex-wrap gap-[5px] leading-none">
             <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#4378FF] bg-[#BFE0FF]">{C.STATUS[el.meetingStatus]}</div>
             <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#54A900] bg-[#D2FFAE]">{C.GAMETYPE[el.gameType]}</div>
@@ -37,7 +44,7 @@ export default function Card({el} : {el : any}) {
             <span className="whitespace-nowrap text-[13px] font-medium text-OnBackgroundGray">모집 마감일 {el.meetingDeadline}</span>
             <Bookmark postId={el.postId} bookmarked={el.bookmarked}/>
         </div>
-    </Link>
+    </div>
   )
   
 }
