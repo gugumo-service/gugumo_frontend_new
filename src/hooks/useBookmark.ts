@@ -50,6 +50,9 @@ export const useAddBookmark = ()=>{
             queryClient.invalidateQueries({
                 queryKey : ['bookmarks']
             })
+            queryClient.invalidateQueries({
+                queryKey : ['postlist']
+            })
         }
     })
 }
@@ -61,6 +64,9 @@ export const useDeleteBookmark = ()=>{
         onSuccess : () =>{
             queryClient.invalidateQueries({
                 queryKey : ['bookmarks']
+            })
+            queryClient.invalidateQueries({
+                queryKey : ['postlist']
             })
         }
     })
