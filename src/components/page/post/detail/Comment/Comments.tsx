@@ -1,6 +1,7 @@
 "use client"
 import CommentFrom from "@/components/page/post/detail/Comment/CommentFrom"
 import CommnetUpdate from "@/components/page/post/detail/Comment/CommnetUpdate";
+import ReplyForm from "@/components/page/post/detail/Comment/ReplyForm";
 import { useCommnets, useDeleteComment } from "@/hooks/useComment";
 import React, { useEffect, useState } from "react";
 
@@ -12,6 +13,22 @@ export default function Comments({session,postid} : {session : any,postid : stri
         commentId : 0,
         type : "edit"
     });
+
+    const onReplyShowHandler = (commentId : number)=>{
+
+        if(commnetShow.commentId === commentId && commnetShow.type === "reply"){
+            return setCommnetShow({
+                commentId : 0,
+                type : "reply"
+            });    
+        }
+
+        setCommnetShow({
+            commentId,
+            type : "reply"
+        });
+
+    };
 
     const deleteHandler = async(commentId : number)=>{
         if(confirm('댓글을 삭제하시겠습니까?')){
@@ -63,7 +80,10 @@ export default function Comments({session,postid} : {session : any,postid : stri
                                     <dd className="text-[13px] text-OnBackgroundGray font-normal">{el.createdDateTime}</dd>
                                 </dl>
                                 <div className="ml-auto flex gap-[10px] md:gap-5">
-                                    <button className="text-[13px] text-OnBackgroundGray cursor-pointer">답글</button>
+                                    <button 
+                                        onClick={()=>onReplyShowHandler(el.commentId)}
+                                        className="text-[13px] text-OnBackgroundGray cursor-pointer"
+                                    >답글</button>
                                     {
                                         el.yours &&
                                         <>
@@ -92,6 +112,16 @@ export default function Comments({session,postid} : {session : any,postid : stri
                     </div>
 
                     {
+                        (commnetShow.commentId === el.commentId && commnetShow.type === "reply") && 
+                        <ReplyForm 
+                            session={session} 
+                            postId={postid} 
+                            parentId={el.commentId} 
+                            setCommnetShow={setCommnetShow}
+                        />
+                    }
+
+                    {
                         comment?.replys.map((reply)=>{
                             if(reply.parentCommentId === el.commentId){
                                 return (
@@ -104,7 +134,6 @@ export default function Comments({session,postid} : {session : any,postid : stri
                                                     <dd className="text-[13px] text-OnBackgroundGray font-normal">{reply.createdDateTime}</dd>
                                                 </dl>
                                                 <div className="ml-auto flex gap-[10px] md:gap-5">
-                                                    <button className="text-[13px] text-OnBackgroundGray cursor-pointer">답글</button>
                                                     {
                                                         reply.yours && 
                                                         <>
