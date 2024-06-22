@@ -18,6 +18,15 @@ const config: Config = {
         "OnSurface" : "#878787",
         "Surface" : "#EEF4FC",
         "Outline" : "#D9D9D9",
+      },
+      keyframes : {
+        wave : {
+          "0%" : {transform: 'translateX(0%)'},
+          "100%" : {transform: 'translateX(-100%)'}
+        }
+      },
+      animation : {
+        wave : "wave 2s infinite linear"
       }
     },
   },
