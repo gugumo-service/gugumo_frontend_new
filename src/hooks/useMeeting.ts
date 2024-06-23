@@ -6,9 +6,8 @@ const fetchMeeting = async ({queryKey} : {queryKey : [string,any,string,string,s
 
     const response = await fetch(`/back/api/v1/meeting?q=${q}&meetingstatus=${meetingstatus}&location=${location}&gametype=${gametype}&sort=${sort}`,{
       headers : {
-        "Authorization" : session.accessToken
+        "Authorization" : session?.accessToken
       },
-      cache : "no-cache"
     });
     if(!response.ok){
         throw new Error('불러오는데 실패 하였습니다.');

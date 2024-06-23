@@ -10,6 +10,10 @@ export default function Bookmark({postId,bookmarked} : {postId : number,bookmark
   const bookmarkHandler = async (e : any,postId : number)=>{
     e.stopPropagation();
 
+    if(!session){
+      return alert('로그인을 해야합니다.');
+    }
+
     if(!bookmarked){
       try {
         addBookmark.mutate({session,postId});
