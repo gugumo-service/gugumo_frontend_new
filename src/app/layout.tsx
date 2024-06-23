@@ -7,11 +7,10 @@ import 'react-calendar/dist/Calendar.css';
 import CustomModal from "@/components/Modal/custom-modal";
 import StoreProvider from "@/lib/store/StoreProvider";
 import AuthProvider from "@/provider/AuthProvider";
-import Script from "next/script";
 import QueryProvider from "@/provider/QueryProvider";
 
 export const metadata: Metadata = {
-  title: "구구모",
+  title: "구구모 - 구기종목 매칭 서비스",
   description: "동네 구기종목 매치 서비스 구구모 입니다.",
   manifest : "/manifest.json",
   icons : {

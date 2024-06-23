@@ -97,7 +97,7 @@ export default async function Detail({params} : {params : {postid : string}}) {
                     <ViewerComponent content={data.data.content}/>
                 </div>
 
-                <BtnList/>
+                <BtnList postid={params.postid}/>
                 <Recommends/>
                 <Comments session={session} postid={params.postid}/>
 
