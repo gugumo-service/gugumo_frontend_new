@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function List({data} : {data : any}) {
+export default function List({session,data} : {session : any,data : any}) {
 
     const router = useRouter();
     const [content,setContent] = useState(data);
@@ -19,7 +19,6 @@ export default function List({data} : {data : any}) {
     const [location,setLocation] = useState('');
     const [gametype,setGametype] = useState('');
     const [sort,setSort] = useState('NEW');
-    const {data : session} = useSession() as any;
 
     const fetchs = async ()=>{
         try {

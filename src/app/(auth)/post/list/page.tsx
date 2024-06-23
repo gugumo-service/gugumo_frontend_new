@@ -5,13 +5,14 @@ import { getServerSession } from "next-auth";
 
 export default async function PostList() {
 
-    const session = await getServerSession(authOptions) as any;
+  const session = await getServerSession(authOptions) as any;
 
   return (
-    <main className="pt-[23px] md:pt-[50x] pb-[121px] md:pb-[170px]">
-        <Wrap>
-            <List session={session}/>
-        </Wrap>
+    <main className="mt-14 pb-[121px] md:pb-[170px]">
+      <Wrap>
+        <List session={session}/>
+      </Wrap>
     </main>
   )
+  
 }

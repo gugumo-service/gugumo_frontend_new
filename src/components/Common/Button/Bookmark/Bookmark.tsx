@@ -1,23 +1,18 @@
 "use client"
 import BookmarkSVG from "@/asset/image/bookmark.svg";
-import { useAddBookmark, useDeleteBookmark } from "@/hooks/useBookmark";
+import { useBookmark } from "@/hooks/useBookmark";
 import { useSession } from "next-auth/react";
 
 export default function Bookmark({postId,bookmarked} : {postId : number,bookmarked : boolean}) {
   const {data:session} = useSession() as any;
-
-  const {mutate : addBookmark} = useAddBookmark();
-  const {mutate : deleteBookmark} = useDeleteBookmark();
+  const {addBookmark,deleteBookmark} = useBookmark(session);
 
   const bookmarkHandler = async (e : any,postId : number)=>{
     e.stopPropagation();
 
     if(!bookmarked){
       try {
-        addBookmark({
-          session,
-          postId
-        });
+        addBookmark.mutate({session,postId});
       }
       catch(err){
         console.log(err);
@@ -25,10 +20,7 @@ export default function Bookmark({postId,bookmarked} : {postId : number,bookmark
     }else{
       if(confirm('정말 삭제 하시겠습니까?')){
         try {
-          deleteBookmark({
-            session,
-            postId
-          })
+          deleteBookmark.mutate({session,postId})
         }
         catch(err){
           console.log(err);

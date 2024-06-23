@@ -14,7 +14,7 @@ export const authOptions : NextAuthOptions = {
 
                 try {
 
-                    const res = await fetch(`${process.env.API_URL}/api/v1/login`,{
+                    const response = await fetch(`${process.env.API_URL}/api/v1/emailLogin`,{
                         method : "POST",
                         headers : {
                             "content-type" : "application/json"
@@ -25,10 +25,18 @@ export const authOptions : NextAuthOptions = {
                         })
                     });
 
-                    if(res.headers.get("authorization")){
-                        return {token : res.headers.get('authorization')};
+                    if(response.ok){
+                        const data = await response.json();
+
+                        if(data.status === "success"){
+                            return {token : data.data};
+                        }else{
+                            return null;
+                        }
+                    }else{
+                        console.log(response);
+                        return null;
                     }
-                    return null;
 
                 } catch (err){
                     console.log(err);
