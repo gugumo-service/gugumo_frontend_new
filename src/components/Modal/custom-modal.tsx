@@ -1,5 +1,5 @@
 "use client"
-import { allClose, close } from "@/lib/store/features/modals/modal";
+import { close } from "@/lib/store/features/modals/modal";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hook";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react"
@@ -16,7 +16,7 @@ export default function CustomModal() {
     const html = document.querySelector('html');
     if(!html) return;
     html.style.overflowY = "auto";
-    dispatch(allClose());
+    dispatch(close());
   },[params,dispatch]);
 
   useEffect(()=>{

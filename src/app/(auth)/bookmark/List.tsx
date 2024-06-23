@@ -16,7 +16,12 @@ export default function List({session} : {session : any}) {
 
       <div className="mt-5 md:mt-[46px] bg-Surface rounded-xl p-[70px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-[30px] mt-[10px] md:mt-7">
-          {bookmarks?.data.content.map((el : any)=><Card key={el.postId} el={el}/>)}
+          {
+            bookmarks?.data.content.length > 0 ?
+              bookmarks?.data.content.map((el : any)=><Card key={el.postId} el={el}/>)
+            :
+              <p className="text-center">게시글이 존재 하지 않습니다.</p>
+          }
         </div>
       </div>
     </>

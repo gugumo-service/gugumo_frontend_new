@@ -22,15 +22,12 @@ const modalSlice = createSlice({
                 }
             ]
         },
-        close : (state,actions)=>{
-            return state.filter((prev)=>prev.Component !== actions.payload);
+        close : ()=>{
+            return []
         },
-        allClose : ()=>{
-            return [];
-        }
     }
 });
 
-export const {open,close,allClose} = modalSlice.actions;
+export const {open,close} = modalSlice.actions;
 
 export default modalSlice.reducer;

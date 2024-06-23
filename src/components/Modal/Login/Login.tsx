@@ -69,6 +69,9 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
                     <button className="font-semibold text-sm md:text-base text-OnPrimary bg-primary py-2 px-4 rounded">로그인 하기</button>
                 </div>
             </form>
+            <div>
+              <div onClick={()=>signIn("kakao")} className="size-6 border rounded-full cursor-pointer">카</div>
+            </div>
             <div className="text-center text-primary font-medium text-[13px] mt-9">
                 <Link href={"/find"}>비밀번호 찾기</Link>
                 <Link href={"/signup"} className="pl-1 ml-1 relative before:block before:w-[1px] before:absolute before:left-0 before:top-0 before:h-full  before:bg-primary">회원가입 하기</Link>
