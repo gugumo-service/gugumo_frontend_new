@@ -18,12 +18,10 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
   
       if(username === ""){
           return alert('이메일을 입력해주세요.');
-      //   return setIsEmailError('이메일을 입력해주세요.');
       }
   
       if(password === ""){
           return alert('비밀번호을 입력해주세요.');
-      //   return setIsPasswordError('비밀번호을 입력해주세요.');
       }
   
       const res = await signIn('credentials',{
@@ -61,7 +59,7 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
             <div className="w-[61px] mx-auto mb-5">
                 <Image src="/asset/image/icon.png" alt="로고 아이콘" width={64} height={63}/>
             </div>
-            <h5 className="font-semibold text-lg text-center">로그인</h5>
+            <h5 className="font-semibold text-lg text-center text-primary">로그인</h5>
             <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
                 <input type="text" placeholder='이메일을 입력해주세요.' className="h-9 md:h-11 rounded-lg border border-Outline font-medium text-sm md:text-base w-full px-3" {...register('username')} />
                 <input type="password" placeholder='비밀번호를 입력하세요.'  className="h-9 md:h-11 rounded-lg border border-Outline font-medium text-sm md:text-base w-full px-3 mt-2" {...register('password')} />
@@ -69,9 +67,9 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
                     <button className="font-semibold text-sm md:text-base text-OnPrimary bg-primary py-2 px-4 rounded">로그인 하기</button>
                 </div>
             </form>
-            <div>
+            {/* <div className="flex justify-center mt-5">
               <div onClick={()=>signIn("kakao")} className="size-6 border rounded-full cursor-pointer">카</div>
-            </div>
+            </div> */}
             <div className="text-center text-primary font-medium text-[13px] mt-9">
                 <Link href={"/find"}>비밀번호 찾기</Link>
                 <Link href={"/signup"} className="pl-1 ml-1 relative before:block before:w-[1px] before:absolute before:left-0 before:top-0 before:h-full  before:bg-primary">회원가입 하기</Link>

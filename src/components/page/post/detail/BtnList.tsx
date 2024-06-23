@@ -2,6 +2,8 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation"
 
+const BUTTONSTYLE = "inline-flex items-center bg-OnPrimary text-sm md:text-base font-medium border rounded py-[9.5px] px-4 justify-center cursor-pointer";
+
 export default function BtnList({postid,yours} : {postid : string, yours : boolean}) {
 
     const router = useRouter();
@@ -40,9 +42,24 @@ export default function BtnList({postid,yours} : {postid : string, yours : boole
 
   return (
     <div className="flex justify-center gap-5 mt-7 md:mt-8">
-        <button onClick={removeHandler} className="inline-flex items-center text-primary bg-OnPrimary text-sm md:text-base font-medium border border-[#4FAAFF] rounded py-[9.5px] px-4 justify-center cursor-pointer">삭제 하기</button>
-        <button onClick={()=>router.push('/')} className="inline-flex items-center text-primary bg-OnPrimary text-sm md:text-base font-medium border border-[#4FAAFF] rounded py-[9.5px] px-4 justify-center cursor-pointer">목록 보기</button>
-        <button className="inline-flex items-center text-primary bg-OnPrimary text-sm md:text-base font-medium border border-[#4FAAFF] rounded py-[9.5px] px-4 justify-center cursor-pointer">수정 하기</button>
+      {
+        yours &&
+        <button 
+          onClick={removeHandler} 
+          className={`${BUTTONSTYLE} text-Error border-Error hover:text-white hover:bg-Error transition-all`}
+        >삭제 하기</button>
+      }
+      <button 
+        onClick={()=>router.push('/')} 
+        className={`${BUTTONSTYLE} text-primary border-primary hover:text-white hover:bg-primary transition-all`}
+      >목록 보기</button>
+      {
+        yours &&
+        <button 
+          onClick={editHandler} 
+          className={`${BUTTONSTYLE} text-SubColor4 border-SubColor4 hover:text-white hover:bg-SubColor4 transition-all`}
+        >수정 하기</button>
+      }
     </div>
   )
 }

@@ -47,7 +47,8 @@ export default async function Detail({params} : {params : {postid : string}}) {
     const res = await fetch(`${process.env.API_URL}/api/v1/meeting/${params.postid}`,{
         headers : {
             "Authorization" : session?.accessToken
-        }
+        },
+        cache : "no-cache"
     })
     const data = await res.json();
 
