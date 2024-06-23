@@ -1,4 +1,5 @@
 "use client"
+import User from "@/components/page/post/detail/Comment/User";
 import { usePostCommnet } from "@/hooks/useComment";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form"
@@ -31,7 +32,7 @@ export default function CommentFrom({postid} : {postid : string}) {
 
   return (
     <div className="flex gap-3 md:gap-8 mt-[28px] md:mt-[52px]">
-        <div className="size-8 md:size-[73px] rounded-full bg-Surface"/>
+        <User/>
         <div className="flex-1 text-right">
             <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <textarea className="w-full resize-none block h-16 md:h-[108px] rounded-xl bg-Surface px-4 py-5 text-sm md:text-base font-semibold placeholder:text-OnBackgroundGray" {...register("content")} placeholder="댓글을 입력해주세요."></textarea>

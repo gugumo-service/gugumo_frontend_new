@@ -13,6 +13,7 @@ const config: Config = {
         "OnPrimary" : "#FFFFFF",
         "OnBackground" : "#000000",
         "OnBackgroundGray" : "#A5A5A5",
+        "Error" : "#FF4444",
         "background" : "#FFFFFF",
         "SubColor4" : "#99CEFF",
         "OnSurface" : "#878787",

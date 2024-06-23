@@ -62,10 +62,17 @@ export default function List({data} : {data : any}) {
         <div className="md:bg-[#F4F5F8] mt-[38px] md:mt-[53px] md:pt-[39px] md:px-[70px] md:pb-[49px] md:rounded-xl">
 
             <Sort sort={sort} setSort={setSort}/>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[13px] md:gap-[30px] mt-[10px] md:mt-7">
-                { content.map((el : any)=><Card key={el.postId} el={el}/>) }
-            </div>
+            
+            {
+                content.length > 0 
+                ?
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[13px] md:gap-[30px] mt-[10px] md:mt-7">
+                        { content.map((el : any)=><Card key={el.postId} el={el}/>) }
+                    </div>
+                :
+                    <p>게시물이 존재하지 않습니다.</p>
+            }
+            
 
             <div className="mt-[13px] md:mt-7 text-right">
                 <button onClick={writeHandler} className="inline-flex items-center py-[0.4em] text-sm md:text-base px-4 font-semibold text-primary bg-OnPrimary border border-primary rounded gap-1 cursor-pointer">

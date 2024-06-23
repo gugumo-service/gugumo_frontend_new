@@ -13,20 +13,47 @@ import BtnList from "@/components/page/post/detail/BtnList";
 import Bookmark from "@/components/Common/Button/Bookmark/Bookmark";
 import Comments from "@/components/page/post/detail/Comment/Comments";
 
+const MEETINGTYPE : {[key : string] : string} = {
+    "SHORT" : "단기모집",
+    "LONG" : "장기모집"
+}
+
+const GAMETYPE : {[key : string] : string } = {
+    "BADMINTON" : "배드민턴",
+    "FUTSAL" : "풋살",
+    "BASKETBALL" : "농구",
+    "TENNIS" : "테니스",
+    "TABLETENNIS" : "탁구",
+    "BASEBALL" : "야구"
+};
+
+const LOCATION : {[key : string] : string } = {
+    "SEOUL" : "서울",
+    "GYEONGGI" : "경기",
+    "INCHEON" : "인천",
+    "DAEGU" : "대구",
+    "BUSAN" : "부산",
+    "GYEONGNAM" : "경남",
+    "GYEONGBUK" : "경북",
+    "GANGWON" : "강원",
+    "JEONNAM" : "전남",
+    "JEONBUK" : "전북",
+    "OTHER" : "그외"
+};
+
 export default async function Detail({params} : {params : {postid : string}}) {
 
     const session = await getServerSession(authOptions) as any;
-
     const res = await fetch(`${process.env.API_URL}/api/v1/meeting/${params.postid}`,{
         headers : {
             "Authorization" : session?.accessToken
         }
     })
-
     const data = await res.json();
 
   return (
     <>
+        <title>{`구구모 - ${data.data.title}`}</title>
         <Headers/>
         <main className="pt-10 md:pt-[108px] pb-36 md:pb-40">
             <Wrap>
@@ -55,28 +82,41 @@ export default async function Detail({params} : {params : {postid : string}}) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 md:mt-8 gap-x-4 md:gap-5">
                     <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
                         <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모집형식</h4>
-                        <p>{data.data.meetingType}</p>
+                        <p>{MEETINGTYPE[data.data.meetingType]}</p>
                     </div>
                     <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
                         <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">지역</h4>
-                        <p>{data.data.location}</p>
+                        <p>{LOCATION[data.data.location]}</p>
                     </div>
                     <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
                         <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">구기종목</h4>
-                        <p>{data.data.gameType}</p>
+                        <p>{GAMETYPE[data.data.gameType]}</p>
                     </div>
-                    <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                        <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">시간대</h4>
-                        <p>{data.data.meetingTime}</p>
-                    </div>
-                    <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                        <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모임 요일</h4>
-                        <p>{data.data.meetingDays}</p>
-                    </div>
-                    <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                        <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모임 날짜</h4>
-                        <p>{data.data.meetingDateTime}</p>
-                    </div>
+
+                    {
+                        data.data.meetingTime &&
+                        <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
+                            <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">시간대</h4>
+                            <p>{data.data.meetingTime}</p>
+                        </div>
+                    }
+
+                    {
+                        data.data.meetingDays &&
+                        <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
+                            <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모임 요일</h4>
+                            <p>{data.data.meetingDays.split(';').join(',')}</p>
+                        </div>
+                    }
+
+                    {
+                        data.data.meetingDateTime &&
+                        <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
+                            <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모임 날짜</h4>
+                            <p>{data.data.meetingDateTime}</p>
+                        </div>
+                    }
+
                     <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
                         <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모집 인원</h4>
                         <p>{data.data.meetingMemberNum} 명</p>
@@ -97,7 +137,11 @@ export default async function Detail({params} : {params : {postid : string}}) {
                     <ViewerComponent content={data.data.content}/>
                 </div>
 
+<<<<<<< Updated upstream
                 <BtnList/>
+=======
+                <BtnList postid={params.postid} yours={data.data.yours} />
+>>>>>>> Stashed changes
                 <Recommends/>
                 <Comments session={session} postid={params.postid}/>
 

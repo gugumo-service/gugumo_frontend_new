@@ -43,7 +43,7 @@ export default function Mypage() {
             <h1 className="text-OnBackground text-lg md:text-2xl font-medium mt-[10px]">마이페이지</h1>
 
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-7 mt-4 md:mt-[60px]">
-                <div className="w-[78px] md:w-[104px] rounded-full bg-Surface bg-center bg-[75% 75%] bg-no-repeat after:block after:pb-[100%]"></div>
+                <div className="size-[78px] md:size-[104px] rounded-full bg-Surface bg-center bg-[url(/asset/image/user/user.png)] bg-[length:95%_95%] bg-no-repeat"></div>
                 <div className="flex items-center gap-[7px] text-base font-medium">
                     닉네임
                     <p className="text-[13px] font-medium text-OnSurface border border-OnSurface py-1 px-2 rounded-full leading-none">
