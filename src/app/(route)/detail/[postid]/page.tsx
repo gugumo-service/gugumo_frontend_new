@@ -138,7 +138,6 @@ export default async function Detail({params} : {params : {postid : string}}) {
                 </div>
 
                 <BtnList postid={params.postid} yours={data.data.yours} />
->>>>>>> Stashed changes
                 <Recommends/>
                 <Comments session={session} postid={params.postid}/>
 
