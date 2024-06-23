@@ -137,9 +137,6 @@ export default async function Detail({params} : {params : {postid : string}}) {
                     <ViewerComponent content={data.data.content}/>
                 </div>
 
-<<<<<<< Updated upstream
-                <BtnList/>
-=======
                 <BtnList postid={params.postid} yours={data.data.yours} />
 >>>>>>> Stashed changes
                 <Recommends/>
