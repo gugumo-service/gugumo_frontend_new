@@ -11,11 +11,11 @@ import { useRouter } from "next/navigation";
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export default function Form({session} : {session : any}) {
+export default function Form({session,edit} : {session : any,edit? : any}) {
 
     const router = useRouter();
     const editorRef = useRef<Editor>(null);
-    const {register,handleSubmit,watch} = useForm();
+    const {register,handleSubmit,watch,setValue} = useForm();
     const [isMeetingDate,setIsMeetingDate] = useState(false);
     const [isMeetingDeadline,setIsMeetingDeadline] = useState(false);
     const [meetingDate,setMeetingDate] = useState<Value>(new Date());
@@ -24,10 +24,22 @@ export default function Form({session} : {session : any}) {
     const meetingTypeWatch = watch('meetingType','SHORT');
 
     useEffect(()=>{
-
-        editorRef.current?.getInstance().setMarkdown('');
-
-    },[]);
+        if(edit){
+            editorRef.current?.getInstance().setMarkdown(edit.content);
+            Object.keys(edit).forEach((key) => { // 가져온 데이터의 각 키와 값을 반복하여 setValue로 설정합니다.
+                if(key === "meetingTime"){
+                    setValue(key, edit[key].split(":")[0]);
+                }else if(key === "meetingDays"){
+                    const array : string[] = edit[key].split(';');
+                    setSelectDays([...array]);
+                }else {
+                    setValue(key, edit[key]);
+                }
+            });
+        }else{
+            editorRef.current?.getInstance().setMarkdown('');
+        }
+    },[edit]);
     
     const meetingDateHandler = (value: Value)=>{
         setMeetingDate(value);
@@ -51,7 +63,7 @@ export default function Form({session} : {session : any}) {
     }
 
     const onSubmitHandler = async (event : any)=>{
-        const {meetingType,location,gameType,meetingMemberNum,meetingTime,openKakao,title} = event;
+        const {meetingStatus,meetingType,location,gameType,meetingMemberNum,meetingTime,openKakao,title} = event;
         const content = editorRef.current?.getInstance().getHTML();
 
         if(gameType === ""){
@@ -87,45 +99,96 @@ export default function Form({session} : {session : any}) {
             return alert('내용을 입력해주세요.');
         }
 
-        const body = {
-            meetingType,
-            gameType,
-            meetingMemberNum,
-            meetingDate : moment(meetingDate as Date).format("YYYY-MM-DD"),
-            meetingDays : selectDays.join(';'),
-            meetingTime,
-            meetingDeadline : moment(meetingDeadline as Date).format("YYYY-MM-DD"),
-            openKakao,
-            title,
-            content,
-            location
-        }
+        if(!edit){
 
-        try {
-            const response = await fetch('/back/api/v1/meeting/new',{
-                method : "POST",
-                headers : {
-                    'Content-Type': 'application/json',
-                    "Authorization" : session.accessToken
-                },
-                body : JSON.stringify(body)
-            });
-            if(response.ok){
-
-                const data = await response.json();
-
-                if(data.status === "success"){
-                    alert('등록이 완료 되었습니다.');
-                    return router.push('/');
-                }else{
-                    return alert('등록에 실패 했습니다.')
-                }
-
+            const body = {
+                meetingType,
+                gameType,
+                meetingMemberNum,
+                meetingDate : moment(meetingDate as Date).format("YYYY-MM-DD"),
+                meetingDays : selectDays.join(';'),
+                meetingTime,
+                meetingDeadline : moment(meetingDeadline as Date).format("YYYY-MM-DD"),
+                openKakao,
+                title,
+                content,
+                location,
             }
-        }
-        catch(err){
-            console.log(err);
-            alert('오류가 발생 했습니다.')
+
+            try {
+                const response = await fetch('/back/api/v1/meeting/new',{
+                    method : "POST",
+                    headers : {
+                        'Content-Type': 'application/json',
+                        "Authorization" : session.accessToken
+                    },
+                    body : JSON.stringify(body)
+                });
+                if(response.ok){
+    
+                    const data = await response.json();
+    
+                    if(data.status === "success"){
+                        alert('등록이 완료 되었습니다.');
+                        return router.push('/');
+                    }else{
+                        return alert('등록에 실패 했습니다.')
+                    }
+    
+                }
+            }
+            catch(err){
+                console.log(err);
+                alert('오류가 발생 했습니다.')
+            }
+
+        }else{
+
+            const body = {
+                meetingType,
+                gameType,
+                meetingMemberNum,
+                meetingDate : moment(meetingDate as Date).format("YYYY-MM-DD"),
+                meetingDays : selectDays.join(';'),
+                meetingTime,
+                meetingDeadline : moment(meetingDeadline as Date).format("YYYY-MM-DD"),
+                openKakao,
+                title,
+                content,
+                location,
+                meetingStatus
+            }
+
+            try {
+                const response = await fetch(`/back/api/v1/meeting/${edit.postId}`,{
+                    method : "PATCH",
+                    headers : {
+                        'Content-Type': 'application/json',
+                        "Authorization" : session.accessToken
+                    },
+                    body : JSON.stringify(body)
+                });
+                if(response.ok){
+    
+                    const data = await response.json();
+    
+                    if(data.status === "success"){
+                        alert('수정이 완료 되었습니다.');
+                        return router.push('/');
+                    }else{
+                        return alert('수정에 실패 했습니다.')
+                    }
+    
+                }else{
+                    console.log(response);
+                    return alert('수정에 실패 했습니다.')
+                }
+            }
+            catch(err){
+                console.log(err);
+                alert('오류가 발생 했습니다.')
+            }
+
         }
 
     }
@@ -138,6 +201,20 @@ export default function Form({session} : {session : any}) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-7 mt-5 md:mt-8">
+
+            {
+                edit &&
+                <div className="min-w-0 flex flex-col gap-[10px]">
+                    <label htmlFor="meetingStatus" className="text-sm md:text-base font-medium px-2">모집상태</label>
+                    <div className="relative">
+                        <select id="meetingStatus" className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border appearance-none" {...register('meetingStatus')} >
+                            <option value="RECRUIT">모집중</option>
+                            <option value="END">모집완료</option>
+                        </select>
+                        <DownIcon className={"absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"} stroke={'#878787'}/>
+                    </div>
+                </div>
+            }
 
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="meetingType" className="text-sm md:text-base font-medium px-2">모집형식</label>
@@ -301,7 +378,7 @@ export default function Form({session} : {session : any}) {
         </div>
 
         <div className="text-center mt-10">
-            <button className="inline-flex items-center text-primary bg-OnPrimary text-sm md:text-base font-medium border border-[#4FAAFF] rounded py-[9.5px] px-4 justify-center cursor-pointer">새글 작성</button>
+            <button className="inline-flex items-center text-primary bg-OnPrimary text-sm md:text-base font-medium border border-[#4FAAFF] rounded py-[9.5px] px-4 justify-center cursor-pointer">{!edit ? "새글 작성" : "수정 하기" }</button>
         </div>
     </form>
   )

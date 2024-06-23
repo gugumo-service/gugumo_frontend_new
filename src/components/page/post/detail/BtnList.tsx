@@ -8,7 +8,7 @@ export default function BtnList({postid} : {postid : string}) {
     const {data : session} = useSession() as any;
 
     const editHandler = ()=>{
-      router.push(`/edit/${postid}`)
+      router.push(`/post/edit/${postid}`)
     }
 
     const removeHandler = async ()=>{
