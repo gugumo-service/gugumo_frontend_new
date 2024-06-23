@@ -15,7 +15,10 @@ export default function Card({el} : {el : any}) {
     }
 
   return (
-    <div onClick={()=>clickHandler(el.postId)} className="bg-white py-5 px-4 rounded-lg cursor-pointer">
+    <div 
+        onClick={()=>clickHandler(el.postId)} 
+        className="bg-white py-5 px-4 rounded-lg cursor-pointer border md:border-none"
+    >
         
         <div className="flex flex-wrap gap-[5px] leading-none">
             <div className={`${TAGSTYLE} text-[#4378FF] bg-[#BFE0FF]`}>{C.STATUS[el.meetingStatus]}</div>

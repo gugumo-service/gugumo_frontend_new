@@ -18,7 +18,6 @@ export default function Mypage() {
                     "Authorization" : session?.accessToken
                 }
             });
-            console.log(res);
             if(res.ok){
                 const data = await res.json();
                 console.log(data);
@@ -38,12 +37,12 @@ export default function Mypage() {
     <main className="py-[2.5%] md:pt-[120px] md:pb-[93px]">
         <Wrap className="box-border">
             <button type="button" className="cursor-pointer md:hidden">
-                <Image src="/asset/images/icon/prev_arrow.svg" alt="뒤로가기" width={20} height={18} />
+                <Image src="/asset/image/icon/prev_arrow.svg" alt="뒤로가기" width={20} height={18} />
             </button>
             <h1 className="text-OnBackground text-lg md:text-2xl font-medium mt-[10px]">마이페이지</h1>
 
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-7 mt-4 md:mt-[60px]">
-                <div className="size-[78px] md:size-[104px] rounded-full bg-Surface bg-center bg-[url(/asset/image/user/user.png)] bg-[length:95%_95%] bg-no-repeat"></div>
+                <div className="size-[78px] md:size-[104px] rounded-full border bg-center bg-[url(/asset/image/user/user.png)] bg-[length:95%_95%] bg-no-repeat"></div>
                 <div className="flex items-center gap-[7px] text-base font-medium">
                     닉네임
                     <p className="text-[13px] font-medium text-OnSurface border border-OnSurface py-1 px-2 rounded-full leading-none">
