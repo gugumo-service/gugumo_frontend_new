@@ -5,45 +5,27 @@ import Location from "@/components/page/main/Location";
 import Search from "@/components/page/main/Search";
 import Sort from "@/components/page/main/Sort";
 import Status from "@/components/page/main/Status";
-import { useSession } from "next-auth/react";
+import { useMeeting } from "@/hooks/useMeeting";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function List({session,data} : {session : any,data : any}) {
+export default function List({session} : {session : any}) {
 
     const router = useRouter();
-    const [content,setContent] = useState(data);
     const [q,setQ] = useState("");
     const [meetingstatus,setMeetingstatus] = useState('RECRUIT');
     const [location,setLocation] = useState('');
     const [gametype,setGametype] = useState('');
     const [sort,setSort] = useState('NEW');
 
-    const fetchs = async ()=>{
-        try {
-            const res = await fetch(`/back/api/v1/meeting?q=${q}&meetingstatus=${meetingstatus}&location=${location}&gametype=${gametype}&sort=${sort}`,{
-                headers : {
-                    "Authorization" : session?.accessToken
-                }
-            });
-            const data = await res.json();
-            setContent(data.data.content);
-        }
-        catch(err){
-            alert('에러가 발생했습니다.');
-        }
-    }
+    const {meeting} = useMeeting(session,q,meetingstatus,location,gametype,sort);
 
     const writeHandler = ()=>{
         if(!session) return alert('로그인을 해야합니다.');
         router.push('/post/write');
     }
     
-    useEffect(()=>{
-        fetchs();
-    },[meetingstatus,q,setContent,location,gametype,sort,session]);
-
   return (
     <>
         {/* 검색 */}
@@ -63,10 +45,11 @@ export default function List({session,data} : {session : any,data : any}) {
             <Sort sort={sort} setSort={setSort}/>
             
             {
-                content.length > 0 
+                meeting &&
+                meeting.data.content.length > 0 
                 ?
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[13px] md:gap-[30px] mt-[10px] md:mt-7">
-                        { content.map((el : any)=><Card key={el.postId} el={el}/>) }
+                        { meeting.data.content.map((el : any)=><Card key={el.postId} el={el}/>) }
                     </div>
                 :
                     <p>게시물이 존재하지 않습니다.</p>

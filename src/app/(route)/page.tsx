@@ -10,18 +10,6 @@ import List from "@/components/page/main/List";
 export default async function Home() {
 
   const session = await getServerSession(authOptions) as any;
-  let data = [];
-  const res = await fetch(`${process.env.API_URL}/api/v1/meeting`,{
-    headers : {
-      "Authorization" : session?.accessToken
-    },
-    cache : "no-cache"
-  });
-  if(res.ok){
-    const result = await res.json();
-    data = result.data.content;
-  }
-
   return (
     <>
       <Headers/>
@@ -31,7 +19,7 @@ export default async function Home() {
           <Recommends/>
         </Wrap>
         <Wrap className="pt-8 mt-8 md:mt-[100px] md:pt-0 border-t-[6px] border-Surface md:border-none">
-          <List session={session} data={data} />
+          <List session={session}/>
         </Wrap>
       </main>
       <Footers/>

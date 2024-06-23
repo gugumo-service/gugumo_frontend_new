@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
-const fetchBookmarks = async ({queryKey} : {queryKey : [string,any]})=>{
-    const [,session] = queryKey;
-    const response = await fetch(`/back/api/v1/bookmark`,{
+const fetchBookmarks = async ({queryKey} : {queryKey : [string,any,string]})=>{
+    const [,session,q] = queryKey;
+    const response = await fetch(`/back/api/v1/bookmark?q=${q}`,{
         headers : {
             "Authorization" : session.accessToken
         }
@@ -47,7 +47,7 @@ const deleteBookmark = async (data : any) =>{
 export const useBookmark = (session : any)=>{
     const [q, setQ] = useState('');
     const queryClient = useQueryClient();
-    const {data : bookmarks, isLoading} = useQuery({queryKey : ["bookmarks",session],queryFn : fetchBookmarks});
+    const {data : bookmarks, isLoading} = useQuery({queryKey : ["bookmarks",session,q],queryFn : fetchBookmarks});
 
     const addBookmarkMutation = useMutation({
         mutationFn : addBookmark,
@@ -56,7 +56,10 @@ export const useBookmark = (session : any)=>{
                 queryKey : ['bookmarks']
             }),
             queryClient.invalidateQueries({
-                queryKey : ['postlist']
+                queryKey : ['meeting']
+            }),
+            queryClient.invalidateQueries({
+                queryKey : ['meeting']
             })
         ])
     });
@@ -68,7 +71,10 @@ export const useBookmark = (session : any)=>{
                 queryKey : ['bookmarks']
             }),
             queryClient.invalidateQueries({
-                queryKey : ['postlist']
+                queryKey : ['meeting']
+            }),
+            queryClient.invalidateQueries({
+                queryKey : ['meeting']
             })
         ])
     });
