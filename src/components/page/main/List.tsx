@@ -1,50 +1,32 @@
 "use client"
 import Card from "@/components/Common/Card/Card";
+import SkeletonCard from "@/components/Common/Card/SkeletonCard";
 import Gametype from "@/components/page/main/Gametype";
 import Location from "@/components/page/main/Location";
 import Search from "@/components/page/main/Search";
 import Sort from "@/components/page/main/Sort";
 import Status from "@/components/page/main/Status";
-import { useSession } from "next-auth/react";
+import { useMeeting } from "@/hooks/useMeeting";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function List({data} : {data : any}) {
+export default function List({session} : {session : any}) {
 
     const router = useRouter();
-    const [content,setContent] = useState(data);
     const [q,setQ] = useState("");
     const [meetingstatus,setMeetingstatus] = useState('RECRUIT');
     const [location,setLocation] = useState('');
     const [gametype,setGametype] = useState('');
     const [sort,setSort] = useState('NEW');
-    const {data : session} = useSession() as any;
 
-    const fetchs = async ()=>{
-        try {
-            const res = await fetch(`/back/api/v1/meeting?q=${q}&meetingstatus=${meetingstatus}&location=${location}&gametype=${gametype}&sort=${sort}`,{
-                headers : {
-                    "Authorization" : session?.accessToken
-                }
-            });
-            const data = await res.json();
-            setContent(data.data.content);
-        }
-        catch(err){
-            alert('에러가 발생했습니다.');
-        }
-    }
+    const {meeting,isLoading} = useMeeting(session,q,meetingstatus,location,gametype,sort);
 
     const writeHandler = ()=>{
         if(!session) return alert('로그인을 해야합니다.');
         router.push('/post/write');
     }
     
-    useEffect(()=>{
-        fetchs();
-    },[meetingstatus,q,setContent,location,gametype,sort,session]);
-
   return (
     <>
         {/* 검색 */}
@@ -64,8 +46,19 @@ export default function List({data} : {data : any}) {
             <Sort sort={sort} setSort={setSort}/>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[13px] md:gap-[30px] mt-[10px] md:mt-7">
-                { content.map((el : any)=><Card key={el.postId} el={el}/>) }
+                {
+                    isLoading 
+                    ?
+                        new Array(12).fill(0).map((_,index)=><SkeletonCard key={index}/>)
+                    :
+                        meeting.data.content.map((el : any)=><Card key={el.postId} el={el}/>)
+                }
             </div>
+
+            {
+                !isLoading &&
+                    meeting.data.content.length <= 0 && <p className="text-center">게시물이 존재하지 않습니다.</p>
+            }
 
             <div className="mt-[13px] md:mt-7 text-right">
                 <button onClick={writeHandler} className="inline-flex items-center py-[0.4em] text-sm md:text-base px-4 font-semibold text-primary bg-OnPrimary border border-primary rounded gap-1 cursor-pointer">

@@ -2,8 +2,11 @@
 import CommentFrom from "@/components/page/post/detail/Comment/CommentFrom"
 import CommnetUpdate from "@/components/page/post/detail/Comment/CommnetUpdate";
 import ReplyForm from "@/components/page/post/detail/Comment/ReplyForm";
+import User from "@/components/page/post/detail/Comment/User";
 import { useCommnets, useDeleteComment } from "@/hooks/useComment";
-import React, { useEffect, useState } from "react";
+import moment from "moment";
+import React, { useState } from "react";
+import 'moment/locale/ko';
 
 export default function Comments({session,postid} : {session : any,postid : string}) {
     
@@ -29,8 +32,7 @@ export default function Comments({session,postid} : {session : any,postid : stri
         });
 
     };
-
-    const deleteHandler = async(commentId : number)=>{
+    const deleteHandler = async (commentId : number)=>{
         if(confirm('댓글을 삭제하시겠습니까?')){
             try {
                 deleteComment({session,comment_id : commentId});
@@ -41,7 +43,6 @@ export default function Comments({session,postid} : {session : any,postid : stri
             }
         }
     }
-
     const onEditShowHandler = (commentId : number)=>{
 
         if(commnetShow.commentId === commentId && commnetShow.type === "edit"){
@@ -72,12 +73,12 @@ export default function Comments({session,postid} : {session : any,postid : stri
             comment?.comments.map((el,index)=>(
                 <React.Fragment key={el.commentId}>
                     <div className={`flex gap-5 ${index > 0 ? "mt-5" : ""}`} key={el.commentId}>
-                        <div className="size-8 md:size-[73px] rounded-full bg-Surface"/>
+                        <User/>
                         <div className="flex-1">
                             <div className="flex items-center gap-2">
                                 <dl className="flex gap-[10px] items-center">
                                     <dt className="text-lg text-primary font-bold">{el.author}</dt>
-                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{el.createdDateTime}</dd>
+                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(el.createdDateTime).startOf('hour').fromNow()}</dd>
                                 </dl>
                                 <div className="ml-auto flex gap-[10px] md:gap-5">
                                     <button 
@@ -126,12 +127,12 @@ export default function Comments({session,postid} : {session : any,postid : stri
                             if(reply.parentCommentId === el.commentId){
                                 return (
                                     <div key={reply.commentId} className="ml-[15%] md:ml-[120px] mt-5 flex gap-5">
-                                        <div className="size-8 md:size-[73px] rounded-full bg-Surface"/>
+                                        <User/>
                                         <div className="flex-1">
                                             <div className="flex items-center gap-2">
                                                 <dl className="flex gap-[10px] items-center">
                                                     <dt className="text-lg text-primary font-bold">{reply.author}</dt>
-                                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{reply.createdDateTime}</dd>
+                                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(reply.createdDateTime).startOf('hour').fromNow()}</dd>
                                                 </dl>
                                                 <div className="ml-auto flex gap-[10px] md:gap-5">
                                                     {
