@@ -3,8 +3,6 @@ import Wrap from "@/components/Common/Wrap";
 import Banner from "@/components/page/main/Banner";
 import Footers from "@/components/Layout/Footers/Footers";
 import Recommends from "@/components/Layout/Recommends/Recommends";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
 import List from "@/components/page/main/List";
 
 export default async function Home() {

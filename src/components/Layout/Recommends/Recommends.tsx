@@ -2,21 +2,19 @@ import { getServerSession } from "next-auth";
 import Recommend from "./Recommend/Recommend";
 import { authOptions } from "@/lib/authOptions";
 
-
 export default async function Recommends() {
 
   const session = await getServerSession(authOptions) as any;
-  let data = [];
+
   const response = await fetch(`${process.env.API_URL}/api/v1/meeting/recommend`,{
     headers : {
       "Authorization" : session?.accessToken
     },
+    cache : "no-store",
   });
-  if(response.ok){
-    const result = await response.json();
-    data = result.data;
-  }
 
+  const data = await response.json();
+  
   return (
     <div className="mt-16">
         <h3 className="text-lg font-bold text-primary md:text-2xl">추천 게시물 🎯</h3>

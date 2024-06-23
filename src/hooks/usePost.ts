@@ -5,7 +5,7 @@ const fetchPost = async ({queryKey} : {queryKey : [string,any,string]})=>{
     const [,session,q] = queryKey;
     const response = await fetch(`/back/api/v1/meeting/my?q=${q}`,{
         headers : {
-            "Authorization" : session.accessToken
+            "Authorization" : session?.accessToken
         }
     });
     if(!response.ok){

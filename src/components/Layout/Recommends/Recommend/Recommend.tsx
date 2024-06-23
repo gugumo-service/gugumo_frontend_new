@@ -1,8 +1,10 @@
 "use client"
 import Bookmark from "@/components/Common/Button/Bookmark/Bookmark";
+import SkeletonCard from "@/components/Common/Card/SkeletonCard";
 import { GAMETYPE, LOCATION, STATUS } from "@/constant/card/constant";
 import moment from "moment";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
@@ -11,6 +13,7 @@ const BUTTONSTYLE = "w-8 h-8 xl:w-10 xl:h-10 rounded-full flex-none border borde
 
 export default function Recommend({data} : {data : any}) {
 
+    const router = useRouter();
     const swiperRef = useRef<SwiperRef>(null);
     const prevHandler = ()=>{
         swiperRef.current?.swiper.slidePrev();
@@ -18,6 +21,9 @@ export default function Recommend({data} : {data : any}) {
     const nextHandler = ()=>{
         swiperRef.current?.swiper.slideNext();
     };
+    const onClickHandler = (postId : number)=>{
+        router.push(`/detail/${postId}`);
+    }
 
   return (
 
@@ -50,8 +56,19 @@ export default function Recommend({data} : {data : any}) {
             }}
         >
             {
-                data.map((e: any)=>(
-                    <SwiperSlide key={e.postId} className="group hover:shadow-xl">
+                // isLoading ?
+                //     new Array(8).fill(0).map((_,index)=>(
+                //         <SwiperSlide key={index} className="border rounded">
+                //             <SkeletonCard/>
+                //         </SwiperSlide>
+                //     ))
+                // :
+                data?.data.map((e: any)=>(
+                    <SwiperSlide 
+                        key={e.postId} 
+                        className="group hover:shadow-xl"
+                        onClick={()=>onClickHandler(e.postId)}
+                    >
                         <div className="bg-[#DBEBFF] border border-SubColor4 py-5 px-4 rounded-lg cursor-pointer group-hover:bg-primary transition-all">
                             <div className="flex flex-wrap gap-[5px] leading-none">
                                 <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#4378FF] bg-[#BFE0FF]">{STATUS[e.meetingStatus]}</div>

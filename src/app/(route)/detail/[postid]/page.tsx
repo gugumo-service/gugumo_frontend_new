@@ -50,7 +50,7 @@ export default async function Detail({params} : {params : {postid : string}}) {
         headers : {
             "Authorization" : session?.accessToken
         },
-        cache : "no-cache"
+        cache : "no-store"
     })
     const data = await res.json();
 
@@ -61,7 +61,7 @@ export default async function Detail({params} : {params : {postid : string}}) {
         <main className="pt-10 md:pt-[108px] pb-36 md:pb-40">
             <Wrap>
                 <Suspense fallback={<Skeleton/>}>
-                    <Link href={'/'}>
+                    <Link href={'/'} className="inline-block">
                         <Image src="/asset/image/icon/prev_arrow.svg" alt="뒤로가기" width={20} height={18}/>
                     </Link>
 
@@ -77,8 +77,8 @@ export default async function Detail({params} : {params : {postid : string}}) {
                             </div>
                         </div>
                         <div className="flex items-center gap-[6px] text-primary">
-                            <Bookmark postId={data.postId} bookmarked={data.data.bookmarked}/>
-                            <p className="text-sm md:text-xl font-medium">01</p>
+                            <Bookmark postId={data.data.postId} bookmarked={data.data.bookmarked}/>
+                            <p className="text-sm md:text-xl font-medium">{data.data.bookmarkCount > 0 ? String(data.data.bookmarkCount).padStart(2,'0') : data.data.bookmarkCount}</p>
                         </div>
                     </div>
 
@@ -116,7 +116,7 @@ export default async function Detail({params} : {params : {postid : string}}) {
                             data.data.meetingDateTime &&
                             <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
                                 <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모임 날짜</h4>
-                                <p>{data.data.meetingDateTime}</p>
+                                <p>{moment(data.data.meetingDateTime).format('YYYY-MM-DD')}</p>
                             </div>
                         }
 
