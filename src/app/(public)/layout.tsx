@@ -14,9 +14,9 @@ export default async function layout({children} : {children : React.ReactNode}) 
 
   return (
     <>
-        <Headers/>
-        {children}
-        <Footers/>
+      <Headers/>
+      {children}
+      <Footers/>
     </>
   )
 }

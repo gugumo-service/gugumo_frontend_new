@@ -7,13 +7,15 @@ import Search from "@/components/page/main/Search";
 import Sort from "@/components/page/main/Sort";
 import Status from "@/components/page/main/Status";
 import { useMeeting } from "@/hooks/useMeeting";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function List({session} : {session : any}) {
+export default function List() {
 
     const router = useRouter();
+    const {data : session} = useSession();
     const [q,setQ] = useState("");
     const [meetingstatus,setMeetingstatus] = useState('RECRUIT');
     const [location,setLocation] = useState('');

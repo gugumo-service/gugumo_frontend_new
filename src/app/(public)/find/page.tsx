@@ -44,7 +44,7 @@ export default function Find() {
           </dd>
         </dl>
         <form onSubmit={handleSubmit(onSubmitHandler)} className="mt-8">
-          <input className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" type="text" placeholder="입하신 이메일 주소를 입력하세요." {...register("email")}/>
+          <input className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" type="text" placeholder="이메일 주소를 입력해주세요." {...register("email")}/>
           <button className="w-[138px] h-12 text-OnPrimary bg-primary rounded-lg mt-4 cursor-pointer text-base mx-auto block" type="submit">전송하기</button>
         </form>
       </div>
