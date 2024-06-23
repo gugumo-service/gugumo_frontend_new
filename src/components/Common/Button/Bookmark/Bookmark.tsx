@@ -31,7 +31,7 @@ export default function Bookmark({postId,bookmarked} : {postId : number,bookmark
 
   return (
     <button onClick={(e)=>bookmarkHandler(e,postId)} type="button" className="cursor-pointer">
-      <BookmarkSVG className={`stroke-[#4FAAFF] ${bookmarked ? "fill-[#4FAAFF]" : "fill-none"}`} width={24} height={24} alt="북마크 아이콘"/>
+      <BookmarkSVG className={`stroke-[#4FAAFF] group-hover:stroke-white ${bookmarked ? "fill-[#4FAAFF]" : "fill-none"}`} width={24} height={24} alt="북마크 아이콘"/>
     </button>
   )
 

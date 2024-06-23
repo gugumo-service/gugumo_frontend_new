@@ -15,6 +15,8 @@ const config: Config = {
         "OnBackgroundGray" : "#A5A5A5",
         "Error" : "#FF4444",
         "background" : "#FFFFFF",
+        "OnSubcolor1":"#4378FF",
+        "OnSubcolor2":"#54A900",
         "SubColor4" : "#99CEFF",
         "OnSurface" : "#878787",
         "Surface" : "#EEF4FC",

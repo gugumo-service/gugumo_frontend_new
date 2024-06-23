@@ -51,36 +51,36 @@ export default function Recommend({data} : {data : any}) {
         >
             {
                 data.map((e: any)=>(
-                    <SwiperSlide key={e.postId}>
-                        <div className="bg-[#DBEBFF] border border-SubColor4 py-5 px-4 rounded-lg cursor-pointer">
+                    <SwiperSlide key={e.postId} className="group hover:shadow-xl">
+                        <div className="bg-[#DBEBFF] border border-SubColor4 py-5 px-4 rounded-lg cursor-pointer group-hover:bg-primary transition-all">
                             <div className="flex flex-wrap gap-[5px] leading-none">
                                 <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#4378FF] bg-[#BFE0FF]">{STATUS[e.meetingStatus]}</div>
                                 <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#54A900] bg-[#D2FFAE]">{GAMETYPE[e.gameType]}</div>
                                 <div className="py-1 px-[6px] whitespace-nowrap rounded text-[13px] text-[#FF6414] bg-[#FDC9AF]">{LOCATION[e.location]}</div>
                             </div>
-                            <h4 className="font-medium text-base leading-[1.3] mt-[11px] break-keep text-ellipsis line-clamp-2 h-10">{e.title}</h4>
+                            <h4 className="font-medium text-base leading-[1.3] mt-[11px] break-keep text-ellipsis line-clamp-2 h-10 group-hover:text-white">{e.title}</h4>
                             <ul className="hidden md:block mt-8 text-[13px]">
                                 {
                                     e.meetingDateTime &&
-                                    <li className="flex text-primary">
+                                    <li className="flex text-primary group-hover:text-white">
                                         <p className="pr-[9px]">시간</p>
-                                        <p className="border-l border-primary pl-[9px]">{moment(e.meetingDateTime).format("YYYY-MM-DD")}</p>
+                                        <p className="border-l border-primary group-hover:border-white pl-[9px]">{moment(e.meetingDateTime).format("YYYY-MM-DD")}</p>
                                     </li>
                                 }
                                 {
                                     e.meetingDays &&
-                                    <li className="flex text-primary mt-1">
+                                    <li className="flex text-primary group-hover:text-white mt-1">
                                         <p className="pr-[9px]">요일</p>
-                                        <p className="border-l border-primary pl-[9px]">{e.meetingDays}</p>
+                                        <p className="border-l border-primary group-hover:border-white pl-[9px]">{e.meetingDays}</p>
                                     </li>
                                 }
-                                <li className="flex text-primary mt-1">
+                                <li className="flex text-primary group-hover:text-white mt-1">
                                     <p className="pr-[9px]">인원</p>
-                                    <p className="border-l border-primary pl-[9px]">{e.meetingMemberNum}명</p>
+                                    <p className="border-l border-primary group-hover:border-white pl-[9px]">{e.meetingMemberNum}명</p>
                                 </li>
                             </ul>
-                            <div className="flex flex-wrap items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-primary gap-[7px]">
-                                <span className="whitespace-nowrap text-[13px] font-medium text-primary">모집 마감일 {e.meetingDeadline}</span>
+                            <div className="flex flex-wrap items-center justify-between pt-[9.5px] mt-[9.5px] border-t border-primary group-hover:border-white gap-[7px]">
+                                <span className="whitespace-nowrap text-[13px] font-medium text-primary group-hover:text-white">모집 마감일 {e.meetingDeadline}</span>
                                 <Bookmark postId={e.postId} bookmarked={e.bookmarked}/>
                             </div>
                         </div>
