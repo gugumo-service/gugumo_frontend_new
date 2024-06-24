@@ -1,3 +1,4 @@
+"use client"
 export default function Skeleton() {
   return (
     <div className="transition-all animate-pulse"> 
