@@ -56,11 +56,8 @@ export const useBookmark = (session : any)=>{
                 queryKey : ['bookmarks']
             }),
             queryClient.invalidateQueries({
-                queryKey : ['postlist']
+                queryKey : ['recommend']
             }),
-            queryClient.invalidateQueries({
-                queryKey : ['meeting']
-            })
         ])
     });
 
@@ -71,11 +68,8 @@ export const useBookmark = (session : any)=>{
                 queryKey : ['bookmarks']
             }),
             queryClient.invalidateQueries({
-                queryKey : ['postlist']
+                queryKey : ['recommend']
             }),
-            queryClient.invalidateQueries({
-                queryKey : ['meeting']
-            })
         ])
     });
 

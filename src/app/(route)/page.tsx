@@ -3,13 +3,9 @@ import Wrap from "@/components/Common/Wrap";
 import Banner from "@/components/page/main/Banner";
 import Footers from "@/components/Layout/Footers/Footers";
 import Recommends from "@/components/Layout/Recommends/Recommends";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
 import List from "@/components/page/main/List";
 
 export default async function Home() {
-
-  const session = await getServerSession(authOptions) as any;
   return (
     <>
       <Headers/>
@@ -19,7 +15,7 @@ export default async function Home() {
           <Recommends/>
         </Wrap>
         <Wrap className="pt-8 mt-8 md:mt-[100px] md:pt-0 border-t-[6px] border-Surface md:border-none">
-          <List session={session}/>
+          <List/>
         </Wrap>
       </main>
       <Footers/>
