@@ -59,29 +59,7 @@ export const authOptions : NextAuthOptions = {
             return session;
         },
         async jwt({user,token,account} : {user : any,token : JWT,account : Account | null}){
-
-            if(account && user){
-
-                token.accessToken = user.token;
-
-                if(account.provider === "kakao"){
-
-                    const response = await fetch(`${process.env.API_URL}/api/v1/kakao/login?code=${account.access_token}`);
-
-                    console.log(response);
-
-                    const data = await response.json();
-
-                    if(data.data === "not joined"){
-                        delete token.accessToken;
-                    }else{
-                        token.accessToken = data.data;
-                    }
-
-                }
-
-            }
-            return token;
+            return token.accessToken = user.token;
         }
     },
     secret : process.env.NEXTAUTH_SECRET,

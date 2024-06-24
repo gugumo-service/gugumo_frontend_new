@@ -17,11 +17,11 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
       const {username,password} = event;
   
       if(username === ""){
-          return alert('이메일을 입력해주세요.');
+        return alert('이메일을 입력해주세요.');
       }
   
       if(password === ""){
-          return alert('비밀번호을 입력해주세요.');
+        return alert('비밀번호을 입력해주세요.');
       }
   
       const res = await signIn('credentials',{

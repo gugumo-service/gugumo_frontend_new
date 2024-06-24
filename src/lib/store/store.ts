@@ -6,6 +6,9 @@ export const makeStore = () => {
     reducer: {
       modal
     },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+      serializableCheck: false,
+    })
   })
 }
 
