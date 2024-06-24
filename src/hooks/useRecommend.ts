@@ -8,7 +8,6 @@ const fetchRecommend = async ({queryKey} : {queryKey : [string,any]})=>{
         headers : {
             "Authorization" : session?.accessToken
         },
-        cache : "no-cache"
     });
     if(!response.ok){
         throw new Error("불러오는데 실패 하였습니다.");

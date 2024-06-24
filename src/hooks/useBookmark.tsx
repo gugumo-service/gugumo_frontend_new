@@ -55,6 +55,9 @@ export const useBookmark = (session : any)=>{
             queryClient.invalidateQueries({
                 queryKey : ['bookmarks']
             }),
+            queryClient.invalidateQueries({
+                queryKey : ['recommend']
+            }),
         ])
     });
 
@@ -63,6 +66,9 @@ export const useBookmark = (session : any)=>{
         onSuccess : () => Promise.all([
             queryClient.invalidateQueries({
                 queryKey : ['bookmarks']
+            }),
+            queryClient.invalidateQueries({
+                queryKey : ['recommend']
             }),
         ])
     });

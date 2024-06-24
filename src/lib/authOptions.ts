@@ -59,7 +59,10 @@ export const authOptions : NextAuthOptions = {
             return session;
         },
         async jwt({user,token,account} : {user : any,token : JWT,account : Account | null}){
-            return token.accessToken = user.token;
+            if(user){
+                token.accessToken = user.token;
+            }
+            return token;
         }
     },
     secret : process.env.NEXTAUTH_SECRET,
