@@ -10,13 +10,13 @@ const fetchMeeting = async ({queryKey} : {queryKey : [string,any,string,string,s
       },
     });
     if(!response.ok){
-        throw new Error('불러오는데 실패 하였습니다.');
+      throw new Error('불러오는데 실패 하였습니다.');
     }
     return response.json();
 }
 
 export const useMeeting = (session : any,q : string,meetingstatus : string,location : string,gametype : string,sort : string)=>{
-  const {data, isLoading} = useQuery({queryKey : ["meeting",session,q,meetingstatus,location,gametype,sort],queryFn : fetchMeeting});
+  const {data, isLoading} = useQuery({queryKey : ["meeting",session,q,meetingstatus,location,gametype,sort],queryFn : fetchMeeting,retry:false});
 
   return {
     meeting : data,
