@@ -43,7 +43,7 @@ export default function List() {
         {/* 종목 */}
         <div className="mt-[18px] md:mt-[15px]"> <Gametype gametype={gametype} setGametype={setGametype}/> </div>
 
-        <div className="md:bg-[#F4F5F8] mt-[38px] md:mt-[53px] md:pt-[39px] md:px-[70px] md:pb-[49px] md:rounded-xl">
+        <div className="mt-[38px] md:mt-[53px] md:pt-[39px] md:pb-[49px] md:bg-[#F4F5F8] md:px-[5%] lg:px-[70px] md:rounded-xl">
 
             <Sort sort={sort} setSort={setSort}/>
 
