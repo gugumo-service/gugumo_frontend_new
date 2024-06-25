@@ -34,18 +34,18 @@ export default function Find() {
   }
 
   return (
-    <div className="py-[108px]">
-      <div className="w-[90%] max-w-[790px] mx-auto py-14 px-36 bg-Surface">
+    <div className="py-[158px]">
+      <div className="w-[90%] max-w-[790px] mx-auto py-14 px-[5%] md:px-36 rounded-xl md:bg-Surface">
         <dl className="text-center text-primary">
-          <dt className="font-semibold text-2xl">비밀번호 찾기</dt>
-          <dd className="text-sm mt-6 leading-6">
+          <dt className="font-semibold text-xl md:text-2xl">비밀번호 찾기</dt>
+          <dd className="text-sm mt-6 leading-6 break-keep">
             비밀번호를 재설정할 수 있는 이메일을 보내드립니다. <br/>
             발송된 이메일의 비밀번호 재설정은 <span className="font-bold">10분 간</span> 유효합니다.
           </dd>
         </dl>
-        <form onSubmit={handleSubmit(onSubmitHandler)} className="mt-8">
-          <input className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" type="text" placeholder="이메일 주소를 입력해주세요." {...register("email")}/>
-          <button className="w-[138px] h-12 text-OnPrimary bg-primary rounded-lg mt-4 cursor-pointer text-base mx-auto block" type="submit">전송하기</button>
+        <form onSubmit={handleSubmit(onSubmitHandler)} className="mt-12 md:mt-8">
+          <input className="w-full h-12 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" type="text" placeholder="가입하신 이메일 주소를 입력해주세요." {...register("email")}/>
+          <button className="w-[138px] h-12 mt-5 text-OnPrimary bg-primary rounded-lg cursor-pointer text-base mx-auto block" type="submit">전송하기</button>
         </form>
       </div>
     </div>
