@@ -63,8 +63,11 @@ export default function List() {
             }
 
             <div className="mt-[13px] md:mt-7 text-right">
-                <button onClick={writeHandler} className="inline-flex items-center py-[0.4em] text-sm md:text-base px-4 font-semibold text-primary bg-OnPrimary border border-primary rounded gap-1 cursor-pointer">
-                    <Image src={"/asset/image/icon/write.svg"} alt="작성 아이콘" width={24} height={24}/>
+                <button 
+                    onClick={writeHandler} 
+                    className={`inline-flex items-center py-[0.4em] text-sm md:text-base px-4 font-semibold border border-primary rounded gap-1 cursor-pointer group transition-all text-primary bg-OnPrimary hover:text-OnPrimary hover:bg-primary`}
+                >
+                    <Image className="group-hover:invert group-hover:brightness-0" src={"/asset/image/icon/write.svg"} alt="작성 아이콘" width={24} height={24}/>
                     새글 작성
                 </button>
             </div>

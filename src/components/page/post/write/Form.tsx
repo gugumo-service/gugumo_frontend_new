@@ -4,7 +4,6 @@ import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import Calendar from "react-calendar";
 import { useForm } from "react-hook-form";
-import { IoChevronDown } from "react-icons/io5";
 import DownIcon from "@/asset/image/down.svg";
 import { useRouter } from "next/navigation";
 
@@ -195,9 +194,10 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
 
   return (
     <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <div className="flex items-center gap-3">
-            <p className="flex flex-none size-[34px] rounded-full bg-primary text-2xl font-semibold text-white items-center justify-center">1</p>
-            <h3 className="text-2xl font-medium">모임 정보를 입력해주세요</h3>
+
+        <div className="flex items-center gap-2 md:gap-3">
+            <p className="flex flex-none size-[23px] md:size-[34px] rounded-full bg-primary text-lg md:text-2xl font-semibold text-white items-center justify-center">1</p>
+            <h3 className="text-lg md:text-2xl font-medium">모임 정보를 입력해주세요</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-7 mt-5 md:mt-8">
@@ -230,7 +230,7 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">지역 선택</label>
                 <div className="relative">
-                    <select  {...register('location')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border">
+                    <select  {...register('location')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border appearance-none">
                         <option value="">지역 선택을 선택해주세요.</option>
                         <option value="SEOUL">서울</option>
                         <option value="INCHEON">인천</option>
@@ -244,13 +244,14 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
                         <option value="JEONBUK">전북</option>
                         <option value="OTHER">그외</option>
                     </select>
+                    <DownIcon className={"absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"} stroke={'#878787'}/>
                 </div>
             </div>
 
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">구기종목</label>
                 <div className="relative">
-                    <select {...register('gameType')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border">
+                    <select {...register('gameType')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border appearance-none">
                         <option value="">구기종목을 선택해주세요.</option>
                         <option value="BADMINTON">배드민턴</option>
                         <option value="BASKETBALL">농구</option>
@@ -259,19 +260,23 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
                         <option value="TABLETENNIS">탁구</option>
                         <option value="BASEBALL">야구</option>
                     </select>
+                    <DownIcon className={"absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"} stroke={'#878787'}/>
                 </div>
             </div>
 
             <div className="min-w-0 flex flex-col gap-[10px]">
                 <label htmlFor="" className="text-sm md:text-base font-medium px-2">모집 인원</label>
-                <select {...register('meetingMemberNum')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border">
-                    <option value="">모집인원을 선택해주세요.</option>
-                    <option value="1">1명</option>
-                    <option value="2">2명</option>
-                    <option value="3">3명</option>
-                    <option value="4">4명</option>
-                    <option value="5">5명 이상</option>
-                </select>
+                <div className="relative">
+                    <select {...register('meetingMemberNum')} className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border appearance-none">
+                        <option value="">모집인원을 선택해주세요.</option>
+                        <option value="1">1명</option>
+                        <option value="2">2명</option>
+                        <option value="3">3명</option>
+                        <option value="4">4명</option>
+                        <option value="5">5명 이상</option>
+                    </select>
+                    <DownIcon className={"absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"} stroke={'#878787'}/>
+                </div>
             </div>
 
             {
@@ -285,7 +290,7 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
                         {
                             isMeetingDate && <Calendar value={meetingDate} minDate={new Date()} onChange={meetingDateHandler} className="absolute top-full z-10"/>
                         }
-                        <IoChevronDown className="absolute right-4 top-1/2 -translate-y-1/2"/>
+                        <DownIcon className={"absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"} stroke={'#878787'}/>
                     </div>
                 </div>
             }
@@ -294,12 +299,19 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
                 meetingTypeWatch === "LONG" &&
                 <div className="min-w-0 flex flex-col gap-[10px]">
                     <label htmlFor="meetingTime" className="text-sm md:text-base font-medium px-2">시간대</label>
-                    <select className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border" id="meetingTime" {...register('meetingTime')}>
-                        <option value="">시간대을 선택해주세요.</option>
-                        {
-                            Array.from({length : 23},(_,i)=>< option key={i} value={i+1}>{i+1}시</option>)
-                        }
-                    </select>
+                    <div className="relative">
+                        <select 
+                            className="w-full h-11 md:h-16 rounded-lg bg-Surface text-sm md:text-base font-medium px-4 box-border appearance-none" 
+                            id="meetingTime" 
+                            {...register('meetingTime')}
+                        >
+                            <option value="">시간대을 선택해주세요.</option>
+                            {
+                                Array.from({length : 23},(_,i)=>< option key={i} value={i+1}>{i+1}시</option>)
+                            }
+                        </select>
+                        <DownIcon className={"absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"} stroke={'#878787'}/>
+                    </div>
                 </div>
             }
 
@@ -307,7 +319,7 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
                 meetingTypeWatch === "LONG" &&
                 <div className="min-w-0 flex flex-col gap-[10px]">
                     <label htmlFor="" className="text-sm md:text-base font-medium px-2">모임 요일</label>
-                    <div className="flex flex-wrap min-w-0 mt-[10px] gap-[10px] justify-start">
+                    <div className="flex flex-wrap min-w-0 gap-[10px] justify-start">
                         {
                             ['월','화','수','목','금','토','일'].map((el,index)=>
                                 <div 
@@ -330,7 +342,7 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
                     {
                         isMeetingDeadline && <Calendar value={meetingDeadline} minDate={new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)} onChange={meetingDeadlineHandler} className="absolute top-full z-10"/>
                     }
-                    <IoChevronDown className="absolute right-4 top-1/2 -translate-y-1/2"/>
+                    <DownIcon className={"absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"} stroke={'#878787'}/>
                 </div>
             </div>
 
@@ -345,9 +357,9 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
 
         <div className="mt-14 md:mt-[87px]">
 
-            <div className="flex items-center gap-3">
-                <p className="flex flex-none size-[34px] rounded-full bg-primary text-2xl font-semibold text-white items-center justify-center">2</p>
-                <h3 className="text-2xl font-medium">모임에 대해 소개해주세요</h3>
+            <div className="flex items-center gap-2 md:gap-3">
+                <p className="flex flex-none size-[23px] md:size-[34px] rounded-full bg-primary text-lg md:text-2xl font-semibold text-white items-center justify-center">2</p>
+                <h3 className="text-lg md:text-2xl font-medium">모임에 대해 소개해주세요</h3>
             </div>
 
             <div className="mt-8">
@@ -378,8 +390,11 @@ export default function Form({session,edit} : {session : any,edit? : any}) {
         </div>
 
         <div className="text-center mt-10">
-            <button className="inline-flex items-center text-primary bg-OnPrimary text-sm md:text-base font-medium border border-[#4FAAFF] rounded py-[9.5px] px-4 justify-center cursor-pointer">{!edit ? "새글 작성" : "수정 하기" }</button>
+            <button 
+                className={`inline-flex items-center text-sm md:text-base font-medium border border-[#4FAAFF] rounded py-[9.5px] px-4 justify-center cursor-pointer transition-all text-primary bg-OnPrimary hover:text-OnPrimary hover:bg-primary`}
+            >{!edit ? "새글 작성" : "수정 하기" }</button>
         </div>
+
     </form>
   )
 }

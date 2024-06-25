@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 import LoginBtn from "@/components/Layout/Headers/LoginBtn";
 import Alarm from "@/components/Layout/Headers/Alarm/Alarm";
 import User from "@/components/Layout/Headers/User";
-import BookmarkSVG from "@/asset/image/bookmark.svg";
 import Image from "next/image";
 
 export default function Headers() {
@@ -21,7 +20,7 @@ export default function Headers() {
           ?
             <LoginBtn/>
           :
-            <div className="flex items-center gap-[26px]">
+            <div className="flex items-center gap-3 md:gap-[26px]">
               <Alarm/>
               <Link href={"/bookmark"}>
                 <Image src={"/asset/image/icon/bookmark.png"} width={24} height={29} alt="북마크"/>
