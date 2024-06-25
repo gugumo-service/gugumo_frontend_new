@@ -52,19 +52,19 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
 
   return (
     <div className="fixed top-0 left-0 w-full h-full z-50 bg-[rgba(000,000,000,0.6)]">
-        <div className="z-50 w-[90%] max-w-[422px] fixed overflow-visible top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white py-9 px-16 box-border rounded-xl">
+        <div className="z-50 w-[90%] max-w-[422px] fixed overflow-visible top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white py-9 px-8 md:px-16 box-border rounded-xl">
             <button type="button" className="absolute right-4 top-5 cursor-pointer" onClick={onClose}>
                 <Image src="/asset/image/icon/close.svg" alt="취소버튼" width={24} height={24} />
             </button>
-            <div className="w-[61px] mx-auto mb-5">
+            <div className="w-[61px] mx-auto">
                 <Image src="/asset/image/icon.png" alt="로고 아이콘" width={64} height={63}/>
             </div>
-            <h5 className="font-semibold text-lg text-center text-primary">로그인</h5>
-            <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
+            <h5 className="font-semibold text-lg text-center text-primary mt-10">로그인</h5>
+            <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
                 <input type="text" placeholder='이메일을 입력해주세요.' className="h-9 md:h-11 rounded-lg border border-Outline font-medium text-sm md:text-base w-full px-3" {...register('username')} />
                 <input type="password" placeholder='비밀번호를 입력하세요.'  className="h-9 md:h-11 rounded-lg border border-Outline font-medium text-sm md:text-base w-full px-3 mt-2" {...register('password')} />
-                <div className="text-center mt-9">
-                    <button className="font-semibold text-sm md:text-base text-OnPrimary bg-primary py-2 px-4 rounded">로그인 하기</button>
+                <div className="text-center mt-5">
+                    <button className="font-semibold text-sm md:text-base text-OnPrimary bg-primary h-9 px-4 rounded leading-none">로그인 하기</button>
                 </div>
             </form>
             {/* <div className="flex justify-center mt-5">

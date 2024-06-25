@@ -14,8 +14,8 @@ import { useState } from "react";
 
 export default function List() {
 
-    const router = useRouter();
     const {data : session} = useSession();
+    const router = useRouter();
     const [q,setQ] = useState("");
     const [meetingstatus,setMeetingstatus] = useState('RECRUIT');
     const [location,setLocation] = useState('');
