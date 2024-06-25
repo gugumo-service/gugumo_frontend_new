@@ -1,11 +1,10 @@
 "use client"
 import Wrap from "@/components/Common/Wrap";
+import Gametype from "@/components/page/auth/signup/Gametype";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoCheckmarkOutline } from "react-icons/io5";
-
-const GAMETYPE = [{get : "BADMINTON",name : "배드민턴"},{get : "FUTSAL",name : "풋살"},{get : "BASKETBALL",name : "농구"},{get : "TENNIS",name : "테니스"},{get : "TABLETENNIS",name : "탁구"},{get : "BASEBALL",name : "야구"}];
 
 export default function Signup() {
 
@@ -21,6 +20,8 @@ export default function Signup() {
     const [likeGame,setLikeGame] = useState<string[]>([]);
 
     const mailSendHandler = async ()=>{
+
+        if(isSend) return;
 
         const {username} = getValues();
 
@@ -55,6 +56,8 @@ export default function Signup() {
     } 
 
     const mailAuthCheckHanlder = async ()=>{
+
+        if(isCheck) return;
 
         const {username,emailAuthNum} = getValues();
 
@@ -112,19 +115,6 @@ export default function Signup() {
             ...prev,
             [key] : value
         }))
-    }
-
-    const gameTypeClickHanlder = (type : string)=>{
-        
-        if(likeGame.includes(type)){
-            setLikeGame(likeGame.filter(el=>el !== type));
-        }else{
-            setLikeGame(prev=>[
-                ...prev,
-                type
-            ])
-        }
-
     }
 
     const onSubmitHandler = async (event : any)=>{
@@ -210,8 +200,8 @@ export default function Signup() {
     }
 
   return (
-    <Wrap className=" pt-12 pb-[90px] md:py-[150px]">
-        <div className="md:py-14 md:px-32 box-border md:bg-Surface mx-auto">
+    <Wrap className="pt-12 pb-[90px] md:py-[150px]">
+        <div className="md:py-14 md:px-32 box-border md:bg-Surface mx-auto max-w-[790px] rounded-xl">
             <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <h1 className="text-xl md:text-2xl font-semibold text-center text-primary mb-12">회원가입</h1>
                 <div>
@@ -220,13 +210,21 @@ export default function Signup() {
                         <input className="h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" type="text" placeholder="닉네임" {...register("nickname")}/>
                         <div className="relative">
                             <input type="text" placeholder="이메일을 입력하세요." {...register("username")} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
-                            <button type="button" onClick={mailSendHandler} className="absolute right-2 top-1/2 -translate-y-1/2 border border-primary text-[13px] font-normal text-primary bg-OnPrimary py-2 px-3 rounded-md cursor-pointer" >인증요청</button>
+                            <button 
+                                type="button" 
+                                onClick={mailSendHandler} 
+                                className={`absolute right-2 top-1/2 -translate-y-1/2 border text-[13px] font-normal py-1 px-2 rounded-md cursor-pointer border-primary ${!isSend ? "text-primary bg-OnPrimary" : "text-OnPrimary bg-primary"}`}
+                            >인증요청</button>
                         </div>
                         {
                             isSend &&
                             <div className="relative">
                                 <input type="text" placeholder="인증번호를 입력하세요" {...register('emailAuthNum')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" />
-                                <button type="button" onClick={mailAuthCheckHanlder} className="absolute right-2 top-1/2 -translate-y-1/2 border border-primary text-[13px] font-normal text-primary bg-OnPrimary py-2 px-3 rounded-md cursor-pointer">확인</button>
+                                <button 
+                                    type="button" 
+                                    onClick={mailAuthCheckHanlder} 
+                                    className={`absolute right-2 top-1/2 -translate-y-1/2 border text-[13px] font-normal py-1 px-2 rounded-md cursor-pointer border-primary ${!isCheck ? "text-primary bg-OnPrimary" : "text-OnPrimary bg-primary"}`}
+                                >확인</button>
                             </div>
                         }
                         <input type="password" placeholder="비밀번호" {...register('password')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
@@ -237,28 +235,15 @@ export default function Signup() {
                 <div className="mt-[46px] md:mt-[58px]">
                     <p className="font-semibold text-base mb-5 text-primary">관심있는 종목 (중복가능)</p>
                     <div className="flex justify-between gap-2 overflow-x-auto">
-                        {
-                            GAMETYPE.map((el,index)=>(
-                                <button 
-                                    key={index}
-                                    type="button" 
-                                    onClick={()=>gameTypeClickHanlder(el.get)}
-                                    className={`size-[77px] flex-none border border-primary rounded-full relative overflow-hidden cursor-pointer ${likeGame.includes(el.get) ? "bg-primary text-white" : "bg-background text-primary"}`}
-                                >
-                                    <div className="absolute left-0 top-0 right-0 bottom-0 flex items-center justify-center gap-[2px] text-sm font-medium">
-                                        <p>{el.name}</p>
-                                    </div>
-                                </button>
-                            ))
-                        }
+                        <Gametype likeGame={likeGame} setLikeGame={setLikeGame}/>
                     </div>
                 </div>
 
                 <div className="mt-[46px] md:mt-[58px]">
-                    <p>서비스 정책</p>
-                    <div className="bg-primary">
-                        <div className="py-4 md:py-5 px-5 md:px-6">
-                            <div className="flex justify-between gap-1">
+                    <p className="text-base text-primary font-semibold">서비스 정책</p>
+                    <div className="bg-primary mt-5 rounded">
+                        <div className="pt-4 pb-5 md:py-5">
+                            <div className="flex justify-between gap-1 px-5 md:px-6">
                                 <div className="flex items-center gap-3 cursor-pointer" onClick={allCheckHandler}>
                                     <div className="size-5 rounded bg-white relative flex-none">
                                         {
@@ -270,7 +255,7 @@ export default function Signup() {
                                 </div>
                             </div>
 
-                            <div className="py-4 md:py-5 px-5 md:px-6">
+                            <div className="mt-4 md:mt-6 pt-6 px-5 md:px-6 border-t border-t-white">
                                 <div className="flex items-center gap-3 cursor-pointer" onClick={()=>isServiceHandler('isAgreeTermsUse',!isService.isAgreeTermsUse)}>
                                     <div className="size-5 rounded bg-white relative flex-none">
                                         {
@@ -278,6 +263,7 @@ export default function Signup() {
                                         }
                                     </div>
                                     <p className="text-base font-medium text-OnPrimary">서비스 이용약관 동의 (필수)</p>
+                                    <button type="button" className="text-xs text-white underline underline-offset-4 ml-auto">내용보기</button>
                                 </div>
                                 <div className="flex items-center gap-3 cursor-pointer mt-4" onClick={()=>isServiceHandler('isAgreeCollectingUsingPersonalInformation',!isService.isAgreeCollectingUsingPersonalInformation)}>
                                     <div className="size-5 rounded bg-white relative flex-none">
@@ -286,6 +272,7 @@ export default function Signup() {
                                         }
                                     </div>
                                     <p className="text-base font-medium text-OnPrimary">개인정보 수집 및 이용 동의 (필수)</p>
+                                    <button type="button" className="text-xs text-white underline underline-offset-4 ml-auto">내용보기</button>
                                 </div>
                                 <div className="flex items-center gap-3 cursor-pointer mt-4" onClick={()=>isServiceHandler('isAgreeMarketing',!isService.isAgreeMarketing)}>
                                     <div className="size-5 rounded bg-white relative flex-none">
@@ -294,6 +281,7 @@ export default function Signup() {
                                         }
                                     </div>
                                     <p className="text-base font-medium text-OnPrimary">마케팅 수신 동의 (선택)</p>
+                                    <button type="button" className="text-xs text-white underline underline-offset-4 ml-auto">내용보기</button>
                                 </div>
                             </div>
                         </div>
