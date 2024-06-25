@@ -17,7 +17,7 @@ const fetchMeeting = async ({queryKey} : {queryKey : [string,any,string,string,s
 
 export const useMeeting = (session : any,q : string,meetingstatus : string,location : string,gametype : string,sort : string)=>{
   const {data, isLoading} = useQuery({queryKey : ["meeting",session,q,meetingstatus,location,gametype,sort],queryFn : fetchMeeting,retry:false});
-
+  
   return {
     meeting : data,
     isLoading

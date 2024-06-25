@@ -32,6 +32,7 @@ export default function Comments({session,postid} : {session : any,postid : stri
         });
 
     };
+
     const deleteHandler = async (commentId : number)=>{
         if(confirm('댓글을 삭제하시겠습니까?')){
             try {
@@ -43,6 +44,7 @@ export default function Comments({session,postid} : {session : any,postid : stri
             }
         }
     }
+
     const onEditShowHandler = (commentId : number)=>{
 
         if(commnetShow.commentId === commentId && commnetShow.type === "edit"){
@@ -62,7 +64,7 @@ export default function Comments({session,postid} : {session : any,postid : stri
   return (
     <div className="mt-36">
       <div className="flex gap-1 text-xl font-bold">
-          댓글<span className="text-OnSurface">{comment?.length}</span>
+          댓글<span className="text-OnSurface">{comment?.length ? comment?.length : 0}</span>
       </div>
 
       {/* 댓글 등록하기 */}
@@ -78,7 +80,7 @@ export default function Comments({session,postid} : {session : any,postid : stri
                             <div className="flex items-center gap-2">
                                 <dl className="flex gap-[10px] items-center">
                                     <dt className="text-lg text-primary font-bold">{el.author}</dt>
-                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(el.createdDateTime).startOf('hour').fromNow()}</dd>
+                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(el.createdDateTime).startOf('second').fromNow()}</dd>
                                 </dl>
                                 <div className="ml-auto flex gap-[10px] md:gap-5">
                                     <button 
@@ -132,7 +134,7 @@ export default function Comments({session,postid} : {session : any,postid : stri
                                             <div className="flex items-center gap-2">
                                                 <dl className="flex gap-[10px] items-center">
                                                     <dt className="text-lg text-primary font-bold">{reply.author}</dt>
-                                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(reply.createdDateTime).startOf('hour').fromNow()}</dd>
+                                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(reply.createdDateTime).startOf('second').fromNow()}</dd>
                                                 </dl>
                                                 <div className="ml-auto flex gap-[10px] md:gap-5">
                                                     {

@@ -17,7 +17,7 @@ export default function Card({el} : {el : any}) {
   return (
     <div 
         onClick={()=>clickHandler(el.postId)} 
-        className="bg-white py-5 px-4 rounded-lg cursor-pointer border md:border-none"
+        className="bg-Surface md:bg-white py-5 px-4 rounded-lg cursor-pointer border md:border-none"
     >
         
         <div className="flex flex-wrap gap-[5px] leading-none">
@@ -28,7 +28,7 @@ export default function Card({el} : {el : any}) {
 
         <h4 className="font-medium text-base leading-[1.3] mt-[11px] break-keep text-ellipsis line-clamp-2 h-10">{el.title}</h4>
         
-        <ul className="hidden md:block mt-12 text-[13px] leading-none">
+        <ul className="md:block mt-12 text-[13px] leading-none">
             {
                 el.meetingDateTime &&
                 <li className="flex text-OnBackgroundGray">

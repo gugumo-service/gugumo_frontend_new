@@ -11,6 +11,9 @@ export default function CommentFrom({postid} : {postid : string}) {
     const {mutate : postComment}  = usePostCommnet();
 
     const onSubmitHandler = async (event : any)=>{
+
+        if(!session) return alert('로그인을 해야합니다.');
+
         const {content} = event;
 
         if(content === ""){
@@ -35,8 +38,15 @@ export default function CommentFrom({postid} : {postid : string}) {
         <User/>
         <div className="flex-1 text-right">
             <form onSubmit={handleSubmit(onSubmitHandler)}>
-                <textarea className="w-full resize-none block h-16 md:h-[108px] rounded-xl bg-Surface px-4 py-5 text-sm md:text-base font-semibold placeholder:text-OnBackgroundGray" {...register("content")} placeholder="댓글을 입력해주세요."></textarea>
-                <button type="submit" className="mt-2 md:mt-6 text-sm md:text-base font-semibold text-OnPrimary bg-primary py-2 px-4 rounded cursor-pointer">댓글 등록하기</button>
+                <textarea 
+                    className="w-full resize-none block h-[68px] md:h-[108px] rounded md:rounded-xl bg-Surface p-3 md:px-4 md:py-5 text-sm md:text-base font-semibold placeholder:text-OnBackgroundGray" 
+                    placeholder="댓글을 입력해주세요."
+                    {...register("content")}
+                ></textarea>
+                <button 
+                    type="submit" 
+                    className="mt-2 md:mt-6 text-sm md:text-base font-semibold text-OnPrimary bg-primary py-2 px-4 rounded cursor-pointer"
+                >댓글 등록하기</button>
             </form>
         </div>
     </div>

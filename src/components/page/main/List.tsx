@@ -14,8 +14,8 @@ import { useState } from "react";
 
 export default function List() {
 
-    const router = useRouter();
     const {data : session} = useSession();
+    const router = useRouter();
     const [q,setQ] = useState("");
     const [meetingstatus,setMeetingstatus] = useState('RECRUIT');
     const [location,setLocation] = useState('');
@@ -43,7 +43,7 @@ export default function List() {
         {/* 종목 */}
         <div className="mt-[18px] md:mt-[15px]"> <Gametype gametype={gametype} setGametype={setGametype}/> </div>
 
-        <div className="md:bg-[#F4F5F8] mt-[38px] md:mt-[53px] md:pt-[39px] md:px-[70px] md:pb-[49px] md:rounded-xl">
+        <div className="mt-[38px] md:mt-[53px] md:pt-[39px] md:pb-[49px] md:bg-[#F4F5F8] md:px-[5%] lg:px-[70px] md:rounded-xl">
 
             <Sort sort={sort} setSort={setSort}/>
 
@@ -63,8 +63,11 @@ export default function List() {
             }
 
             <div className="mt-[13px] md:mt-7 text-right">
-                <button onClick={writeHandler} className="inline-flex items-center py-[0.4em] text-sm md:text-base px-4 font-semibold text-primary bg-OnPrimary border border-primary rounded gap-1 cursor-pointer">
-                    <Image src={"/asset/image/icon/write.svg"} alt="작성 아이콘" width={24} height={24}/>
+                <button 
+                    onClick={writeHandler} 
+                    className={`inline-flex items-center py-[0.4em] text-sm md:text-base px-4 font-semibold border border-primary rounded gap-1 cursor-pointer group transition-all text-primary bg-OnPrimary hover:text-OnPrimary hover:bg-primary`}
+                >
+                    <Image className="group-hover:invert group-hover:brightness-0" src={"/asset/image/icon/write.svg"} alt="작성 아이콘" width={24} height={24}/>
                     새글 작성
                 </button>
             </div>
