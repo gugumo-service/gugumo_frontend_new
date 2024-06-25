@@ -80,7 +80,7 @@ export default function Comments({session,postid} : {session : any,postid : stri
                             <div className="flex items-center gap-2">
                                 <dl className="flex gap-[10px] items-center">
                                     <dt className="text-lg text-primary font-bold">{el.author}</dt>
-                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(el.createdDateTime).startOf('hour').fromNow()}</dd>
+                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(el.createdDateTime).startOf('second').fromNow()}</dd>
                                 </dl>
                                 <div className="ml-auto flex gap-[10px] md:gap-5">
                                     <button 
@@ -134,7 +134,7 @@ export default function Comments({session,postid} : {session : any,postid : stri
                                             <div className="flex items-center gap-2">
                                                 <dl className="flex gap-[10px] items-center">
                                                     <dt className="text-lg text-primary font-bold">{reply.author}</dt>
-                                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(reply.createdDateTime).startOf('hour').fromNow()}</dd>
+                                                    <dd className="text-[13px] text-OnBackgroundGray font-normal">{ moment(reply.createdDateTime).startOf('second').fromNow()}</dd>
                                                 </dl>
                                                 <div className="ml-auto flex gap-[10px] md:gap-5">
                                                     {
