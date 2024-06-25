@@ -20,7 +20,7 @@ export default async function Detail({params} : {params : {postid : string}}) {
             <Wrap>
                 <Suspense fallback={<Skeleton/>}>
                     <DetailUI postid={params.postid}/>
-                    <Recommends/>
+                    {/* <Recommends/> */}
                     <Comments session={session} postid={params.postid}/>
                 </Suspense>
             </Wrap>

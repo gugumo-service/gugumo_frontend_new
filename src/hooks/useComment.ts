@@ -81,7 +81,7 @@ const deleteComment = async (data : any)=>{
 }
 
 export const useCommnets = (session : any,postid : string)=>{
-    return useQuery<commentT>({queryKey : ["commnet"],queryFn : ()=>fetchCommnets(session,postid), retry : false})
+    return useQuery<commentT>({queryKey : ["commnet"],queryFn : ()=>fetchCommnets(session,postid)})
 }
 
 export const usePostCommnet = ()=>{

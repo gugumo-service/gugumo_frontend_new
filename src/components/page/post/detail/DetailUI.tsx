@@ -54,7 +54,9 @@ export default async function DetailUI({postid} : {postid : string}) {
         <Link href={'/'} className="inline-block">
             <Image src="/asset/image/icon/prev_arrow.svg" alt="뒤로가기" width={20} height={18}/>
         </Link>
-        <h1 className="text-lg md:text-2xl mt-8 font-semibold leading-normal">{data.data.title}</h1>
+        
+        <h1 className="text-lg md:text-2xl mt-1 md:mt-8 font-semibold leading-normal">{data.data.title}</h1>
+        
         <div className="flex items-center mt-2 md:mt-7 pb-[18px] text-sm md:text-lg font-medium text-OnBackgroundGray border-b border-Outline justify-between flex-wrap gap-1">
             <div className="flex items-center gap-[10px] md:gap-[18px]">
                 <p>{data.data.author !=="" ? data.data.author : "탈퇴한 유저"}</p>
@@ -69,15 +71,19 @@ export default async function DetailUI({postid} : {postid : string}) {
                 <p className="text-sm md:text-xl font-medium">{data.data.bookmarkCount > 0 ? String(data.data.bookmarkCount).padStart(2,'0') : data.data.bookmarkCount}</p>
             </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 md:mt-8 gap-x-4 md:gap-5">
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 md:mt-8 gap-4 md:gap-5">
+
             <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
                 <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모집형식</h4>
                 <p>{MEETINGTYPE[data.data.meetingType]}</p>
             </div>
+
             <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
                 <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">지역</h4>
                 <p>{LOCATION[data.data.location]}</p>
             </div>
+
             <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
                 <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">구기종목</h4>
                 <p>{GAMETYPE[data.data.gameType]}</p>
@@ -111,21 +117,27 @@ export default async function DetailUI({postid} : {postid : string}) {
                 <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모집 인원</h4>
                 <p>{data.data.meetingMemberNum} 명</p>
             </div>
+
             <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
                 <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모집 마감</h4>
                 <p>{data.data.meetingDeadline}</p>
             </div>
+
             <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[104px_1fr] md:grid-cols-[136px_1fr]">
                 <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">오픈카톡 주소</h4>
                 <a href={data.data.openKakao} target="_blank" className="w-36 md:w-[158px] h-10 flex items-center justify-center bg-primary text-white rounded">
                     오픈톡 참여 <Image src="/asset/image/icon/link.svg" width={24} height={24} alt="링크 아이콘" />
                 </a>
             </div>
+
         </div>
+
         <div className="mt-8 md:mt-24 min-h-72 md:min-h-[848px] w-full py-3 md:py-9 px-4 md:px-12 box-border text-sm md:text-lg font-medium leading-8 border">
             <ViewerComponent content={data.data.content}/>
         </div>
+
         <BtnList postid={postid} yours={data.data.yours} />
+
     </>
   )
 }
