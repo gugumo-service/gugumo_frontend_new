@@ -38,7 +38,7 @@ export default function Mypage() {
     },[session]);
 
   return (
-    <main className="py-[2.5%] md:pt-[120px] md:pb-[93px]">
+    <main className="py-24 md:pt-[120px] md:pb-[93px]">
         <Wrap className="box-border">
             <button type="button" className="cursor-pointer md:hidden">
                 <Image src="/asset/image/icon/prev_arrow.svg" alt="뒤로가기" width={20} height={18} />
