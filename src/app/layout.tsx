@@ -8,6 +8,8 @@ import CustomModal from "@/components/Modal/custom-modal";
 import StoreProvider from "@/lib/store/StoreProvider";
 import AuthProvider from "@/provider/AuthProvider";
 import QueryProvider from "@/provider/QueryProvider";
+import "@/lib/firebase"
+import FCMProvider from "@/provider/FCMProvider";
 
 export const metadata: Metadata = {
   title: "구구모 - 구기종목 매칭 서비스",
@@ -45,7 +47,9 @@ export default function RootLayout({
         <AuthProvider>
           <StoreProvider>
             <QueryProvider>
-              {children}
+              <FCMProvider>
+                {children}
+              </FCMProvider>
               <CustomModal/>
             </QueryProvider>
           </StoreProvider>
