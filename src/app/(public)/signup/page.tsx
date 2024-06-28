@@ -1,12 +1,15 @@
 "use client"
 import Wrap from "@/components/Common/Wrap";
 import Gametype from "@/components/page/auth/signup/Gametype";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoCheckmarkOutline } from "react-icons/io5";
 
 export default function Signup() {
+
+    const {data : session} = useSession();
 
     const router = useRouter();
     const {register,handleSubmit,getValues} = useForm();
@@ -207,14 +210,27 @@ export default function Signup() {
                 <div>
                     <p className="font-semibold text-base mb-5 text-primary">정보 입력</p>
                     <div className="flex flex-col gap-4 md:gap-5">
-                        <input className="h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" type="text" placeholder="닉네임" {...register("nickname")}/>
+                        <input 
+                            type="text" 
+                            placeholder="닉네임"
+                            className="h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" 
+                            {...register("nickname",{value : session?.user?.name})}
+                        />
                         <div className="relative">
-                            <input type="text" placeholder="이메일을 입력하세요." {...register("username")} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
-                            <button 
-                                type="button" 
-                                onClick={mailSendHandler} 
-                                className={`absolute right-2 top-1/2 -translate-y-1/2 border text-[13px] font-normal py-1 px-2 rounded-md cursor-pointer border-primary ${!isSend ? "text-primary bg-OnPrimary" : "text-OnPrimary bg-primary"}`}
-                            >인증요청</button>
+                            <input 
+                                type="text" 
+                                placeholder="이메일을 입력하세요." 
+                                className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" 
+                                {...register("username",{value : session?.user?.email, disabled : session ? true : false})}
+                            />
+                            {
+                                !session &&
+                                <button 
+                                    type="button" 
+                                    onClick={mailSendHandler} 
+                                    className={`absolute right-2 top-1/2 -translate-y-1/2 border text-[13px] font-normal py-1 px-2 rounded-md cursor-pointer border-primary ${!isSend ? "text-primary bg-OnPrimary" : "text-OnPrimary bg-primary"}`}
+                                >인증요청</button>
+                            }
                         </div>
                         {
                             isSend &&
@@ -227,8 +243,13 @@ export default function Signup() {
                                 >확인</button>
                             </div>
                         }
-                        <input type="password" placeholder="비밀번호" {...register('password')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
-                        <input type="password" placeholder="비밀번호 확인" {...register('confirmPW')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
+                        {
+                            !session &&
+                            <>
+                                <input type="password" placeholder="비밀번호" {...register('password')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
+                                <input type="password" placeholder="비밀번호 확인" {...register('confirmPW')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
+                            </>
+                        }
                     </div>
                 </div>
 

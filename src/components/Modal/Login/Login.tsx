@@ -1,4 +1,5 @@
 "use client"
+import Kakao from "@/components/Modal/Login/oAuth/Kakao";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,9 +68,9 @@ export default function Login({isOpen,onClose} : {isOpen : boolean,onClose : any
                   <button className="font-semibold text-sm md:text-base text-OnPrimary bg-primary h-9 px-4 rounded leading-none">로그인 하기</button>
               </div>
           </form>
-          {/* <div className="flex justify-center mt-5">
-            <div onClick={()=>signIn("kakao")} className="size-6 border rounded-full cursor-pointer">카</div>
-          </div> */}
+          <div className="flex justify-center mt-5">
+            <Kakao/>
+          </div>
           <div className="text-center text-primary font-medium text-[13px] mt-9">
               <Link href={"/find"}>비밀번호 찾기</Link>
               <Link href={"/signup"} className="pl-1 ml-1 relative before:block before:w-[1px] before:absolute before:left-0 before:top-0 before:h-full  before:bg-primary">회원가입 하기</Link>
