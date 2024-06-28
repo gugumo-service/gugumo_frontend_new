@@ -97,11 +97,14 @@ export default function Mypage() {
                     <Nickname setNickname={setNickname}/>
             }
             {
-                isLoading
+                (session?.type !== "oauth") 
                 ?
-                    <SkeletonPassword/>
-                :
-                    <Password/>
+                    isLoading 
+                    ?
+                        <SkeletonPassword/>
+                    :
+                        <Password/>
+                : null
             }
             {
                 !isLoading &&

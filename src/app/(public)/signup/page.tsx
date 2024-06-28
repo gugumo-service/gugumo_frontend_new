@@ -298,7 +298,7 @@ export default function Signup() {
                             </div>
                         }
                         {
-                            !session &&
+                            session.type !== "oauth" &&
                             <>
                                 <input type="password" placeholder="비밀번호" {...register('password')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
                                 <input type="password" placeholder="비밀번호 확인" {...register('confirmPW')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>

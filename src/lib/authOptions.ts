@@ -85,6 +85,10 @@ export const authOptions : NextAuthOptions = {
                 token.accessToken = user.token;
             }
 
+            if(account){
+                token.type = account.type;
+            }
+
             return token;
 
         },
@@ -99,6 +103,8 @@ export const authOptions : NextAuthOptions = {
                 session.nickname = token.nickname;
                 session.kakaoId = token.kakaoId;
             }
+
+            session.type = token.type;
 
             return session;
         }
