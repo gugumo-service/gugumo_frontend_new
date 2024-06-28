@@ -9,14 +9,14 @@ import Image from "next/image";
 
 export default function Headers() {
 
-  const {data} = useSession();
-
+  const {data : session} = useSession() as any;
+  
   return (
     <header className="mt-8 md:mt-10 w-full relative z-20">
       <Wrap className="flex items-center justify-between">
         <Link href={'/'} className="md:w-[172px] w-[91px]"><img src="/asset/image/logo.svg" alt="로고"/></Link>
         {
-          !data 
+          !session?.accessToken
           ?
             <LoginBtn/>
           :

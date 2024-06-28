@@ -5,13 +5,15 @@ import Password from "@/components/page/auth/mypage/Password";
 import SkeletonNickname from "@/components/page/auth/mypage/SkeletonUI/SkeletonNickname";
 import SkeletonPassword from "@/components/page/auth/mypage/SkeletonUI/SkeletonPassword";
 import SkeletonUser from "@/components/page/auth/mypage/SkeletonUI/SkeletonUser";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Mypage() {
 
     const [nickname,setNickname] = useState('');
+    const router = useRouter();
     const {data : session} = useSession() as any;
     const [isLoading,setIsLoading] = useState(true);
 
@@ -31,6 +33,28 @@ export default function Mypage() {
         catch(err){
             console.error(err);
         }
+    }
+
+    const delUserHandler = async ()=>{
+
+        if(confirm('회원 탈퇴를 하시겠습니까?')){
+
+            const response = await fetch('/back/api/v1/member',{
+                method : "DELETE",
+                headers : {
+                    "Authorization" : session?.accessToken
+                }
+            });
+
+            if(response.ok){
+                alert('회원 탈퇴가 완료 되었습니다.');
+                signOut({
+                    callbackUrl : "/"
+                });
+            }
+
+        }
+
     }
 
     useEffect(()=>{
@@ -73,16 +97,19 @@ export default function Mypage() {
                     <Nickname setNickname={setNickname}/>
             }
             {
-                isLoading
+                (session?.type !== "oauth") 
                 ?
-                    <SkeletonPassword/>
-                :
-                    <Password/>
+                    isLoading 
+                    ?
+                        <SkeletonPassword/>
+                    :
+                        <Password/>
+                : null
             }
             {
                 !isLoading &&
                     <div className="text-center mt-[88px] md:mt-20">
-                        <button className="text-xs md:text-base font-medium cursor-pointer border-b border-OnBackgroundGray px-1 pb-[2px] text-OnBackgroundGray">회원탈퇴</button>
+                        <button onClick={delUserHandler} className="text-xs md:text-base font-medium cursor-pointer border-b border-OnBackgroundGray px-1 pb-[2px] text-OnBackgroundGray">회원탈퇴</button>
                     </div>
             }
         </Wrap>
