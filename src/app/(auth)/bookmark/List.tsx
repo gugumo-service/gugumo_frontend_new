@@ -6,7 +6,7 @@ import { useBookmark } from "@/hooks/useBookmark";
 
 export default function List({session} : {session : any}) {
 
-  const {bookmarks,isLoading,setQ} = useBookmark(session);
+  const {bookmarks,isLoading,isError,setQ} = useBookmark(session);
 
   return (
     <>
@@ -18,7 +18,7 @@ export default function List({session} : {session : any}) {
       <div className="mt-5 md:mt-[46px] md:bg-Surface rounded-xl md:px-[5%] md:p-[70px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-[30px]">
           {
-            isLoading 
+            isLoading || isError
             ?
               new Array(12).fill(0).map((_,index)=><SkeletonCard key={index}/>)
             :
@@ -26,7 +26,7 @@ export default function List({session} : {session : any}) {
           }
         </div>
         {
-          !isLoading && bookmarks.data.content.length <= 0 &&
+          !isLoading && bookmarks?.data.content.length <= 0 &&
             <p className="text-center">게시글이 존재 하지 않습니다.</p>
         }
       </div>

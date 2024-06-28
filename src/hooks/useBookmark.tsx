@@ -47,7 +47,7 @@ const deleteBookmark = async (data : any) =>{
 export const useBookmark = (session : any)=>{
     const [q, setQ] = useState('');
     const queryClient = useQueryClient();
-    const {data : bookmarks, isLoading} = useQuery({queryKey : ["bookmarks",session,q],queryFn : fetchBookmarks,retry : false});
+    const {data : bookmarks, isLoading, isError} = useQuery({queryKey : ["bookmarks",session,q],queryFn : fetchBookmarks});
 
     const addBookmarkMutation = useMutation({
         mutationFn : addBookmark,
@@ -76,6 +76,7 @@ export const useBookmark = (session : any)=>{
     return {
         bookmarks,
         isLoading,
+        isError,
         setQ,
         addBookmark : addBookmarkMutation,
         deleteBookmark : deleteBookmarkMutation

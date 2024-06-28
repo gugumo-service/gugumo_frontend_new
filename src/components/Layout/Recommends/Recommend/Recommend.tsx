@@ -28,7 +28,7 @@ export default function Recommend() {
         router.push(`/detail/${postId}`);
     }
 
-    const {recommends,isLoading} = useRecommend(session);
+    const {recommends,isLoading,isError} = useRecommend(session);
 
   return (
 
@@ -61,7 +61,7 @@ export default function Recommend() {
             }}
         >
             {
-                isLoading ?
+                isLoading || isError ?
                     new Array(8).fill(0).map((_,index)=>(
                         <SwiperSlide key={index} className="border rounded">
                             <SkeletonCard/>

@@ -17,11 +17,12 @@ const fetchPost = async ({queryKey} : {queryKey : [string,any,string]})=>{
 export const usePost = (session : any)=>{
     
     const [q, setQ] = useState('');
-    const {data : posts, isLoading} = useQuery({queryKey : ["postlist",session,q],queryFn : fetchPost,retry : false})
+    const {data : posts, isLoading,isError} = useQuery({queryKey : ["postlist",session,q],queryFn : fetchPost});
 
     return {
         posts,
         isLoading,
+        isError,
         setQ
     }
 

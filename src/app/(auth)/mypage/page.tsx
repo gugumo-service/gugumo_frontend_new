@@ -7,13 +7,11 @@ import SkeletonPassword from "@/components/page/auth/mypage/SkeletonUI/SkeletonP
 import SkeletonUser from "@/components/page/auth/mypage/SkeletonUI/SkeletonUser";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Mypage() {
 
     const [nickname,setNickname] = useState('');
-    const router = useRouter();
     const {data : session} = useSession() as any;
     const [isLoading,setIsLoading] = useState(true);
 
