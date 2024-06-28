@@ -73,6 +73,10 @@ export const authOptions : NextAuthOptions = {
 
                 if(data.status !== "fail"){
                     token.accessToken = data.data;
+                }else{
+                    token.username = user.email;
+                    token.nickname = user.name;
+                    token.kakaoId = user.id;
                 }
 
             }
@@ -84,10 +88,16 @@ export const authOptions : NextAuthOptions = {
             return token;
 
         },
-        async session({session,token} : any) : Promise<any>{
+        async session({token} : any) : Promise<any>{
+
+            const session = {} as any;
 
             if(token.accessToken){
                 session.accessToken = token.accessToken;
+            }else{
+                session.username = token.username;
+                session.nickname = token.nickname;
+                session.kakaoId = token.kakaoId;
             }
 
             return session;

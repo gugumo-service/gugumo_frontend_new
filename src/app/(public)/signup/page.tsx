@@ -1,18 +1,18 @@
 "use client"
 import Wrap from "@/components/Common/Wrap";
 import Gametype from "@/components/page/auth/signup/Gametype";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoCheckmarkOutline } from "react-icons/io5";
 
 export default function Signup() {
 
-    const {data : session} = useSession();
+    const {data : session} = useSession() as any;
 
     const router = useRouter();
-    const {register,handleSubmit,getValues} = useForm();
+    const {register,handleSubmit,getValues,setValue} = useForm();
     const [isSend,setIsSend] = useState(false);
     const [isCheck,setIsCheck] = useState(false);
     const [isService,setIsService] = useState({
@@ -128,26 +128,6 @@ export default function Signup() {
             return alert('닉네임을 입력해주세요');
         }
 
-        if(!username){
-            return alert('이메일을 입력해주세요');
-        }        
-
-        if(!isCheck){
-            return alert('이메일 인증이 필요합니다.');
-        }
-
-        if(!emailAuthNum){
-            return alert('인증번호를 입력해주세요');
-        }
-        
-        if(!password){
-            return alert('비밀번호를 입력해주세요');
-        }
-
-        if(password !== confirmPW){
-            return alert('비밀번호가 서로 다릅니다.');
-        }
-
         if(!isService.isAgreeTermsUse){
             return alert('서비스 이용약관에 동의해주세요.');
         }
@@ -156,51 +136,125 @@ export default function Signup() {
             return alert('개인정보 수집 및 이용에 동의해주세요');
         }
 
-        try {
+        if(!session){ // 기본 회원가입
 
-            const res = await fetch('/back/api/v2/member',{
-                method : "POST",
-                headers : {
-                    "Content-Type": "Application/json"
-                },
-                body : JSON.stringify({
-                    username,
-                    nickname,
-                    password,
-                    favoriteSports : likeGame.join(','),
-                    isAgreeTermsUse : isService.isAgreeTermsUse,
-                    isAgreeCollectingUsingPersonalInformation : isService.isAgreeCollectingUsingPersonalInformation,
-                    isAgreeMarketing : isService.isAgreeMarketing,
-                    emailAuthNum
-                })
-            });
+            if(!username){
+                return alert('이메일을 입력해주세요');
+            }        
+    
+            if(!isCheck){
+                return alert('이메일 인증이 필요합니다.');
+            }
+    
+            if(!emailAuthNum){
+                return alert('인증번호를 입력해주세요');
+            }
+            
+            if(!password){
+                return alert('비밀번호를 입력해주세요');
+            }
+    
+            if(password !== confirmPW){
+                return alert('비밀번호가 서로 다릅니다.');
+            }
 
-            if(res.ok){
-                
-                const data = await res.json();
+            try {
 
-                if(data.status === "success"){
-                    alert('회원가입이 완료 되었습니다.');
-                    return router.push('/');
+                const res = await fetch('/back/api/v2/member',{
+                    method : "POST",
+                    headers : {
+                        "Content-Type": "Application/json"
+                    },
+                    body : JSON.stringify({
+                        username,
+                        nickname,
+                        password,
+                        favoriteSports : likeGame.join(','),
+                        isAgreeTermsUse : isService.isAgreeTermsUse,
+                        isAgreeCollectingUsingPersonalInformation : isService.isAgreeCollectingUsingPersonalInformation,
+                        isAgreeMarketing : isService.isAgreeMarketing,
+                        emailAuthNum
+                    })
+                });
+    
+                if(res.ok){
+                    
+                    const data = await res.json();
+    
+                    if(data.status === "success"){
+                        alert('회원가입이 완료 되었습니다.');
+                        return router.push('/');
+                    }else{
+                        return alert(data.message);
+                    }
+    
                 }else{
-                    return alert(data.message);
+                    if(res.status === 409){
+                        return alert('이미 존재하는 회원입니다.');    
+                    }
+                    return alert('서버와 통신이 원할하지 않습니다.');
                 }
+    
+            }
+            catch(err){
+                // console.error(err);
+                alert('오류가 발생했습니다.');
+            }
 
-            }else{
-                if(res.status === 409){
-                    return alert('이미 존재하는 회원입니다.');    
+        }else{
+
+            try {
+
+                const res = await fetch('/back/api/v1/kakao/member',{
+                    method : "POST",
+                    headers : {
+                        "Content-Type": "Application/json"
+                    },
+                    body : JSON.stringify({
+                        username : session?.username,
+                        nickname,
+                        favoriteSports : likeGame.join(','),
+                        kakaoId : session?.id,
+                        isAgreeTermsUse : isService.isAgreeTermsUse,
+                        isAgreeCollectingUsingPersonalInformation : isService.isAgreeCollectingUsingPersonalInformation,
+                        isAgreeMarketing : isService.isAgreeMarketing,
+                    })
+                });
+    
+                if(res.ok){
+                    
+                    const data = await res.json();
+    
+                    if(data.status === "success"){
+                        alert('회원가입이 완료 되었습니다.');
+                        signIn('kakao',{
+                            callbackUrl : "/"
+                        });
+                    }else{
+                        return alert(data.message);
+                    }
+    
+                }else{
+                    if(res.status === 409){
+                        return alert('이미 존재하는 회원입니다.');    
+                    }
+                    return alert('서버와 통신이 원할하지 않습니다.');
                 }
-                return alert('서버와 통신이 원할하지 않습니다.');
+    
+            }
+            catch(err){
+                // console.error(err);
+                alert('오류가 발생했습니다.');
             }
 
         }
-        catch(err){
-            // console.error(err);
-            alert('오류가 발생했습니다.');
-        }
-        
 
     }
+
+    useEffect(()=>{
+        setValue('nickname',session?.nickname);
+        setValue('username',session?.username);
+    },[session]);
 
   return (
     <Wrap className="pt-12 pb-[90px] md:py-[150px]">
@@ -214,14 +268,14 @@ export default function Signup() {
                             type="text" 
                             placeholder="닉네임"
                             className="h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" 
-                            {...register("nickname",{value : session?.user?.name})}
+                            {...register("nickname")}
                         />
                         <div className="relative">
                             <input 
                                 type="text" 
                                 placeholder="이메일을 입력하세요." 
                                 className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" 
-                                {...register("username",{value : session?.user?.email, disabled : session ? true : false})}
+                                {...register("username",{disabled : session ? true : false})}
                             />
                             {
                                 !session &&
