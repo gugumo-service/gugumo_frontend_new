@@ -38,6 +38,9 @@ const LOCATION : {[key : string] : string } = {
     "OTHER" : "그외"
 };
 
+const gridClass = 'grid items-center text-OnSurface text-xs md:text-lg font-medium gap-3 grid-cols-[62px_1fr] md:grid-cols-[102px_1fr]';
+const gridTitle = 'md:py-3 md:px-6 bg-Surface text-center box-border text-nowrap w-full h-8 md:h-10 flex items-center justify-center rounded'
+
 export default async function DetailUI({postid} : {postid : string}) {
 
     const session = await getServerSession(authOptions) as any;
@@ -72,60 +75,60 @@ export default async function DetailUI({postid} : {postid : string}) {
             </div>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 md:mt-8 gap-4 md:gap-5">
+        <div className="grid grid-cols-1 min-[400px]:grid-cols-[1fr_1.5fr] md:grid-cols-2 mt-4 md:mt-8 gap-4 gap-x-2 md:gap-5">
 
-            <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모집형식</h4>
+            <div className={gridClass}>
+                <h4 className={gridTitle}>모집형식</h4>
                 <p>{MEETINGTYPE[data.data.meetingType]}</p>
             </div>
 
-            <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">지역</h4>
+            <div className={gridClass}>
+                <h4 className={gridTitle}>지역</h4>
                 <p>{LOCATION[data.data.location]}</p>
             </div>
 
-            <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">구기종목</h4>
+            <div className={gridClass}>
+                <h4 className={gridTitle}>구기종목</h4>
                 <p>{GAMETYPE[data.data.gameType]}</p>
             </div>
 
             {
                 data.data.meetingTime &&
-                <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                    <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">시간대</h4>
+                <div className={gridClass}>
+                    <h4 className={gridTitle}>시간대</h4>
                     <p>{data.data.meetingTime}</p>
                 </div>
             }
 
             {
                 data.data.meetingDays &&
-                <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                    <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모임 요일</h4>
+                <div className={gridClass}>
+                    <h4 className={gridTitle}>모임 요일</h4>
                     <p>{data.data.meetingDays.split(';').join(',')}</p>
                 </div>
             }
 
             {
                 data.data.meetingDateTime &&
-                <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                    <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모임 날짜</h4>
+                <div className={gridClass}>
+                    <h4 className={gridTitle}>모임 날짜</h4>
                     <p>{moment(data.data.meetingDateTime).format('YYYY-MM-DD')}</p>
                 </div>
             }
-
-            <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모집 인원</h4>
+            
+            <div className={gridClass}>
+                <h4 className={gridTitle}>모집 인원</h4>
                 <p>{data.data.meetingMemberNum} 명</p>
             </div>
 
-            <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[82px_1fr] md:grid-cols-[102px_1fr]">
-                <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">모집 마감</h4>
+            <div className={gridClass}>
+                <h4 className={gridTitle}>모집 마감</h4>
                 <p>{data.data.meetingDeadline}</p>
             </div>
 
-            <div className="grid items-center text-OnSurface text-sm md:text-lg font-medium gap-3 grid-cols-[104px_1fr] md:grid-cols-[136px_1fr]">
-                <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-10 flex items-center justify-center rounded">오픈카톡 주소</h4>
-                <a href={data.data.openKakao} target="_blank" className="w-36 md:w-[158px] h-10 flex items-center justify-center bg-primary text-white rounded">
+            <div className="grid items-center text-OnSurface text-xs md:text-lg font-medium gap-3 grid-cols-[104px_1fr] md:grid-cols-[136px_1fr]">
+                <h4 className="py-3 px-6 bg-Surface text-center box-border text-nowrap w-full h-8 md:h-10 flex items-center justify-center rounded">오픈카톡 주소</h4>
+                <a href={data.data.openKakao} target="_blank" className="w-full md:w-[158px] h-8 md:h-10 flex items-center justify-center bg-primary text-white rounded whitespace-nowrap ">
                     오픈톡 참여 <Image src="/asset/image/icon/link.svg" width={24} height={24} alt="링크 아이콘" />
                 </a>
             </div>
