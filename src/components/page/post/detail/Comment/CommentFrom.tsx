@@ -12,7 +12,7 @@ export default function CommentFrom({postid} : {postid : string}) {
 
     const onSubmitHandler = async (event : any)=>{
 
-        if(!session) return alert('로그인을 해야합니다.');
+        if(!session || !session.accessToken){ return alert('로그인을 해야합니다.')};
 
         const {content} = event;
 
