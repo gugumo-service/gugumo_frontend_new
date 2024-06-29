@@ -22,9 +22,8 @@ export default function Headers() {
           :
             <div className="flex items-center gap-3 md:gap-[26px]">
               <Alarm/>
-              <Link href={"/bookmark"}>
-                <Image 
-                  className="w-4 md:w-auto"
+              <Link className="w-4 md:w-auto" href={"/bookmark"}>
+                <Image
                   src={"/asset/image/icon/bookmark.png"} 
                   width={24} 
                   height={29} 
