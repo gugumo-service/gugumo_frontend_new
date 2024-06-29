@@ -1,12 +1,15 @@
 "use client"
 import Card from "@/components/Common/Card/Card";
 import SkeletonCard from "@/components/Common/Card/SkeletonCard";
+import Paging from "@/components/Layout/Paging/Paging";
 import Search from "@/components/page/auth/Search";
 import { useBookmark } from "@/hooks/useBookmark";
+import { useState } from "react";
 
 export default function List({session} : {session : any}) {
 
-  const {bookmarks,isLoading,isError,setQ} = useBookmark(session);
+  const [page,setPage] = useState(1);
+  const {bookmarks,pageable,isLoading,isError,setQ} = useBookmark(session,page);
 
   return (
     <>
@@ -22,13 +25,19 @@ export default function List({session} : {session : any}) {
             ?
               new Array(12).fill(0).map((_,index)=><SkeletonCard key={index}/>)
             :
-              bookmarks.data.content.map((el : any)=><Card key={el.postId} el={el}/>)
+              bookmarks?.map((el : any)=><Card key={el.postId} el={el}/>)
           }
         </div>
         {
-          !isLoading && bookmarks?.data.content.length <= 0 &&
+          !isLoading && bookmarks?.length <= 0 &&
             <p className="text-center">게시글이 존재 하지 않습니다.</p>
         }
+
+        {
+          pageable &&
+          <Paging pageable={pageable} setPage={setPage}/>
+        }
+
       </div>
     </>
   )

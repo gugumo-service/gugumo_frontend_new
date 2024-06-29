@@ -1,12 +1,15 @@
 "use client"
 import Card from "@/components/Common/Card/Card";
 import SkeletonCard from "@/components/Common/Card/SkeletonCard";
+import Paging from "@/components/Layout/Paging/Paging";
 import Search from "@/components/page/auth/Search";
 import { usePost } from "@/hooks/usePost";
+import { useState } from "react";
 
 export default function List({session} : {session : any}) {
   
-  const {posts,isLoading,isError,setQ} = usePost(session);
+  const [page,setPage] = useState(1);
+  const {posts,pageable,isLoading,isError,setQ} = usePost(session,page);
 
   return (
     <>
@@ -22,13 +25,19 @@ export default function List({session} : {session : any}) {
             ?
               new Array(12).fill(0).map((_,index)=><SkeletonCard key={index}/>)
             :
-              posts.data.content.map((el : any)=><Card key={el.postId} el={el}/>)
+              posts?.map((el : any)=><Card key={el.postId} el={el}/>)
           }
         </div>
         {
-          !isLoading && posts?.data.content.length <= 0 &&
+          !isLoading && posts?.length <= 0 &&
             <p className="text-center">게시글이 존재 하지 않습니다.</p>
         }
+
+        {
+          pageable &&
+          <Paging pageable={pageable} setPage={setPage}/>
+        }
+
       </div>
     </>
   )
