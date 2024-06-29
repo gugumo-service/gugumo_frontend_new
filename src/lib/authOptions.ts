@@ -51,6 +51,9 @@ export const authOptions : NextAuthOptions = {
             clientSecret : process.env.KAKAO_CLIENT || ""
         })
     ],
+    jwt : {
+        maxAge : 60 * 60
+    },
     callbacks : {
         async jwt({user,token,account} : any) : Promise<any>{
 

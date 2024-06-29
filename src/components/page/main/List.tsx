@@ -53,7 +53,7 @@ export default function List() {
                     ?
                         new Array(12).fill(0).map((_,index)=><SkeletonCard key={index}/>) 
                     :
-                        meeting.data.content.map((el : any)=><Card key={el.postId} el={el}/>)
+                        meeting?.data.content.map((el : any)=><Card key={el.postId} el={el}/>)
                 }
             </div>
 

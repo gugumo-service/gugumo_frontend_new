@@ -7,6 +7,13 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoCheckmarkOutline } from "react-icons/io5";
 
+interface isServiceT {
+    [key : string] : boolean;
+    isAgreeTermsUse : boolean,
+    isAgreeCollectingUsingPersonalInformation : boolean,
+    isAgreeMarketing : boolean
+}
+
 export default function Signup() {
 
     const {data : session} = useSession() as any;
@@ -15,7 +22,7 @@ export default function Signup() {
     const {register,handleSubmit,getValues,setValue} = useForm();
     const [isSend,setIsSend] = useState(false);
     const [isCheck,setIsCheck] = useState(false);
-    const [isService,setIsService] = useState({
+    const [isService,setIsService] = useState<isServiceT>({
         isAgreeTermsUse : false,
         isAgreeCollectingUsingPersonalInformation : false,
         isAgreeMarketing : false
@@ -49,6 +56,7 @@ export default function Signup() {
 
             }else{
                 setIsSend(false);
+                return alert('인증요청에 에러가 발생했습니다.');
             }
         }
         catch(err){
@@ -267,14 +275,14 @@ export default function Signup() {
                         <input 
                             type="text" 
                             placeholder="닉네임"
-                            className="h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" 
+                            className="sign-input"
                             {...register("nickname")}
                         />
                         <div className="relative">
                             <input 
                                 type="text" 
                                 placeholder="이메일을 입력하세요." 
-                                className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" 
+                                className="sign-input"
                                 {...register("username",{disabled : session ? true : false})}
                             />
                             {
@@ -283,25 +291,40 @@ export default function Signup() {
                                     type="button" 
                                     onClick={mailSendHandler} 
                                     className={`absolute right-2 top-1/2 -translate-y-1/2 border text-[13px] font-normal py-1 px-2 rounded-md cursor-pointer border-primary ${!isSend ? "text-primary bg-OnPrimary" : "text-OnPrimary bg-primary"}`}
-                                >인증요청</button>
+                                >{!isSend? "인증요청" : "인증요청됨"}</button>
                             }
                         </div>
                         {
                             isSend &&
                             <div className="relative">
-                                <input type="text" placeholder="인증번호를 입력하세요" {...register('emailAuthNum')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray" />
+                                <input 
+                                    type="text" 
+                                    placeholder="인증번호를 입력하세요"
+                                    className="sign-input"
+                                    {...register('emailAuthNum')}
+                                />
                                 <button 
                                     type="button" 
                                     onClick={mailAuthCheckHanlder} 
                                     className={`absolute right-2 top-1/2 -translate-y-1/2 border text-[13px] font-normal py-1 px-2 rounded-md cursor-pointer border-primary ${!isCheck ? "text-primary bg-OnPrimary" : "text-OnPrimary bg-primary"}`}
-                                >확인</button>
+                                >{!isCheck ? "확인" : "확인됨"}</button>
                             </div>
                         }
                         {
-                            session.type !== "oauth" &&
+                            (!session || session.type !== "oauth") &&
                             <>
-                                <input type="password" placeholder="비밀번호" {...register('password')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
-                                <input type="password" placeholder="비밀번호 확인" {...register('confirmPW')} className="w-full h-11 rounded-lg border border-Outline px-3 text-base font-medium placeholder:text-OnBackgroundGray"/>
+                                <input 
+                                    type="password" 
+                                    placeholder="비밀번호" 
+                                    className="sign-input"
+                                    {...register('password')}
+                                />
+                                <input 
+                                    type="password"
+                                    placeholder="비밀번호 확인"
+                                    className="sign-input"
+                                    {...register('confirmPW')}
+                                />
                             </>
                         }
                     </div>
@@ -309,7 +332,7 @@ export default function Signup() {
 
                 <div className="mt-[46px] md:mt-[58px]">
                     <p className="font-semibold text-base mb-5 text-primary">관심있는 종목 (중복가능)</p>
-                    <div className="flex justify-between gap-2 overflow-x-auto">
+                    <div className="flex justify-between gap-2 overflow-x-auto pb-1">
                         <Gametype likeGame={likeGame} setLikeGame={setLikeGame}/>
                     </div>
                 </div>
@@ -331,34 +354,26 @@ export default function Signup() {
                             </div>
 
                             <div className="mt-4 md:mt-6 pt-6 px-5 md:px-6 border-t border-t-white">
-                                <div className="flex items-center gap-3 cursor-pointer" onClick={()=>isServiceHandler('isAgreeTermsUse',!isService.isAgreeTermsUse)}>
-                                    <div className="size-5 rounded bg-white relative flex-none">
-                                        {
-                                            isService.isAgreeTermsUse && <IoCheckmarkOutline className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs"/>
-                                        }
-                                    </div>
-                                    <p className="text-base font-medium text-OnPrimary">서비스 이용약관 동의 (필수)</p>
-                                    <button type="button" className="text-xs text-white underline underline-offset-4 ml-auto">내용보기</button>
-                                </div>
-                                <div className="flex items-center gap-3 cursor-pointer mt-4" onClick={()=>isServiceHandler('isAgreeCollectingUsingPersonalInformation',!isService.isAgreeCollectingUsingPersonalInformation)}>
-                                    <div className="size-5 rounded bg-white relative flex-none">
-                                        {
-                                            isService.isAgreeCollectingUsingPersonalInformation && <IoCheckmarkOutline className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs"/>
-                                        }
-                                    </div>
-                                    <p className="text-base font-medium text-OnPrimary">개인정보 수집 및 이용 동의 (필수)</p>
-                                    <button type="button" className="text-xs text-white underline underline-offset-4 ml-auto">내용보기</button>
-                                </div>
-                                <div className="flex items-center gap-3 cursor-pointer mt-4" onClick={()=>isServiceHandler('isAgreeMarketing',!isService.isAgreeMarketing)}>
-                                    <div className="size-5 rounded bg-white relative flex-none">
-                                        {
-                                            isService.isAgreeMarketing && <IoCheckmarkOutline className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs"/>
-                                        }
-                                    </div>
-                                    <p className="text-base font-medium text-OnPrimary">마케팅 수신 동의 (선택)</p>
-                                    <button type="button" className="text-xs text-white underline underline-offset-4 ml-auto">내용보기</button>
-                                </div>
+                                {
+                                    [
+                                        {id : "isAgreeTermsUse", label : "서비스 이용약관 동의 (필수)"},
+                                        {id : "isAgreeCollectingUsingPersonalInformation", label : "개인정보 수집 및 이용 동의 (필수)"},
+                                        {id : "isAgreeMarketing", label : "마케팅 수신 동의 (선택)"}
+                                    ]
+                                    .map(({ id, label },index)=>(
+                                        <div key={index} className={`flex items-center gap-3 cursor-pointer ${index !== 0 ? "mt-4" : ""}`} onClick={()=>isServiceHandler(id,!isService[id])}>
+                                            <div className="size-5 rounded bg-white relative flex-none">
+                                                {
+                                                    isService[id] && <IoCheckmarkOutline className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs"/>
+                                                }
+                                            </div>
+                                            <p className="text-base font-medium text-OnPrimary">{label}</p>
+                                            <button type="button" className="text-xs text-white underline underline-offset-4 ml-auto">내용보기</button>
+                                        </div>
+                                    ))
+                                }
                             </div>
+
                         </div>
                     </div>
                 </div>
