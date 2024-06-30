@@ -5,6 +5,7 @@ import Password from "@/components/page/auth/mypage/Password";
 import SkeletonNickname from "@/components/page/auth/mypage/SkeletonUI/SkeletonNickname";
 import SkeletonPassword from "@/components/page/auth/mypage/SkeletonUI/SkeletonPassword";
 import SkeletonUser from "@/components/page/auth/mypage/SkeletonUI/SkeletonUser";
+import { GAMETYPE } from "@/constant/card/constant";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -12,6 +13,7 @@ import { useEffect, useState } from "react";
 export default function Mypage() {
 
     const [nickname,setNickname] = useState('');
+    const [favoriteSports,setFavoriteSports] = useState([]);
     const {data : session} = useSession() as any;
     const [isLoading,setIsLoading] = useState(true);
 
@@ -25,6 +27,7 @@ export default function Mypage() {
             if(res.ok){
                 const data = await res.json();
                 setNickname(data.data.nickname);
+                setFavoriteSports(data.data.favoriteSports.split(','));
                 setIsLoading(false);
             }
         }
@@ -75,11 +78,22 @@ export default function Mypage() {
                     :
                         <>
                             <div className="size-[78px] md:size-[104px] rounded-full border bg-center bg-[url(/asset/image/user/user.png)] bg-[length:95%_95%] bg-no-repeat"></div>
-                            <div className="flex items-center gap-[7px] text-base font-medium">
-                                닉네임
-                                <p className="text-[13px] font-medium text-OnSurface border border-OnSurface py-1 px-2 rounded-full leading-none">
-                                    {nickname}
-                                </p>
+                            <div className="flex gap-[7px] flex-wrap items-center text-base font-medium justify-center md:justify-start">
+                                <div className="flex gap-[7px] flex-none">
+                                    닉네임
+                                    <p className="text-[13px] font-medium text-OnSurface border border-OnSurface py-1 px-2 rounded-full leading-none">
+                                        {nickname}
+                                    </p>
+                                </div>
+                                <div className="flex gap-[7px]">
+                                    {
+                                        favoriteSports.map((el,index)=>(
+                                            <p key={index} className="text-[13px] font-medium text-OnSurface border border-OnSurface py-1 px-2 rounded-full leading-none">
+                                                {GAMETYPE[el]}
+                                            </p>
+                                        ))
+                                    }
+                                </div>
                             </div>
                         </>
                 }

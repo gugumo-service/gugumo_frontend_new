@@ -1,7 +1,4 @@
 "use client"
-
-import { authOptions } from "@/lib/authOptions";
-import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import ViewSVG from "@/asset/image/view.svg";
@@ -44,7 +41,7 @@ const LOCATION : {[key : string] : string } = {
 const gridClass = 'grid items-center text-OnSurface text-xs md:text-lg font-medium gap-3 grid-cols-[62px_1fr] md:grid-cols-[102px_1fr]';
 const gridTitle = 'md:py-3 md:px-6 bg-Surface text-center box-border text-nowrap w-full h-8 md:h-10 flex items-center justify-center rounded'
 
-export default async function DetailUI({detail,postid} : {detail : any, postid : string}) {
+export default function DetailUI({detail,postid} : {detail : any, postid : string}) {
 
     const [bookCount,setBookCount] = useState(detail.data.bookmarkCount);
 

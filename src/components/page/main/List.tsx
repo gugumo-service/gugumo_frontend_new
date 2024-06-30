@@ -22,7 +22,7 @@ export default function List() {
     const [location,setLocation] = useState('');
     const [gametype,setGametype] = useState('');
     const [sort,setSort] = useState('NEW');
-    const [page,setPage] = useState(2);
+    const [page,setPage] = useState(1);
 
     const {meeting,pageable,isLoading,isError} = useMeeting(session,q,meetingstatus,location,gametype,sort,page);
 
