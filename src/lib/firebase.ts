@@ -31,7 +31,7 @@ export const setTokenHanlder = async ()=>{
       })
         .then(currentToken=>{
           if(currentToken){
-            console.log(currentToken);
+            // console.log(currentToken);
           }else{
             console.log('오류');
           }
