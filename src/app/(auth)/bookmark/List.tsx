@@ -4,12 +4,10 @@ import SkeletonCard from "@/components/Common/Card/SkeletonCard";
 import Paging from "@/components/Layout/Paging/Paging";
 import Search from "@/components/page/auth/Search";
 import { useBookmark } from "@/hooks/useBookmark";
-import { useState } from "react";
 
 export default function List({session} : {session : any}) {
 
-  const [page,setPage] = useState(1);
-  const {bookmarks,pageable,isLoading,isError,setQ} = useBookmark(session,page);
+  const {bookmarks,pageable,isLoading,isError,setQ,setPage} = useBookmark(session);
 
   return (
     <>
